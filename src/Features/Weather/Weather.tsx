@@ -30,13 +30,13 @@ const getWeather = (state: IState) => {
   };
 };
 
-export default () => {
+/* export default () => {
   return (
     <Provider value={client}>
       <Weather />
     </Provider>
   );
-};
+}; */
 
 const Weather = () => {
   const getLocation = useGeolocation();
@@ -69,3 +69,5 @@ const Weather = () => {
 
   return <Chip label={`Weather in ${locationName}: ${description} and ${temperatureinFahrenheit}°`} />;
 };
+
+export default Weather;
