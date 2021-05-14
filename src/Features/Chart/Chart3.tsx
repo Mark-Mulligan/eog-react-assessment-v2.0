@@ -6,17 +6,24 @@ type ChartProps = {
   data: any;
 }
 
+const chartColors = ["#E74C3C", "#566573", "#3498DB", "#58D68D", "#F4D03F", "#C39BD3"];
+
 const Chart3 = ({ data }: ChartProps) => {
   return (
-    <div>
-      <LineChart width={500} height={300}>
+    <div className="chart-wrapper">
+    <LineChart data={data} height={650} width={700} margin={{
+            top: 5,
+            right: 20,
+            left: 20,
+            bottom: 20,
+          }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="at" type="category" allowDuplicatedCategory={false} />
         <YAxis dataKey="value" />
         <Tooltip />
         <Legend />
-        {data.map((d : any) => (
-          <Line dataKey="value" data={d.data} name={d.name} key={d.name} />
+        {data.map((d : any, index: number) => (
+          <Line dataKey="value" data={d.data} name={d.name} key={d.name} dot={false} stroke={chartColors[index]}/>
         ))}
       </LineChart>
     </div>

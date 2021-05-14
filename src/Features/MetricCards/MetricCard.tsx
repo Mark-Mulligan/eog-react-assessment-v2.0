@@ -11,7 +11,7 @@ import { useQuery } from 'urql';
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
-    display: 'inline-block'
+    display: 'inline-block',
   },
   pos: {
     marginBottom: 12,
@@ -19,10 +19,10 @@ const useStyles = makeStyles({
 });
 
 type CardProps = {
-  title: string,
-  timeStamp: number,
-  metricReading: string
-}
+  title: string;
+  timeStamp: number;
+  metricReading: string;
+};
 
 const query = `
 query($input: MeasurementQuery!) {
@@ -43,11 +43,11 @@ export default function MetricCard({ title, timeStamp, metricReading }: CardProp
   //const thirtyMinInterval = 30 * 60 * 1000;
   const oneMinInterval = 1 * 60 * 1000;
   //console.log('timestamp', timeStamp);
-  
+
   const input = {
     metricName: String(title),
     before: timeStamp,
-    after: timeStamp-oneMinInterval,
+    after: timeStamp - oneMinInterval,
   };
 
   const [result] = useQuery({
@@ -56,7 +56,6 @@ export default function MetricCard({ title, timeStamp, metricReading }: CardProp
       input,
     },
   });
-
 
   const { fetching, data, error } = result;
 
@@ -68,33 +67,44 @@ export default function MetricCard({ title, timeStamp, metricReading }: CardProp
 
     if (!data) return;
 
-    console.log(data.getMeasurements);
+    const dataWithReadableTime: any = [];
 
-    if (data.getMeasurements[0].metric === "oilTemp") {
-      dispatch(actions.oilChartDataReceived(data.getMeasurements));
+    data.getMeasurements.forEach((rawData: any ) => {
+      console.log(rawData);
+      let date = new Date(rawData.at);
+
+      dataWithReadableTime.push({
+        at: `${date.toLocaleDateString()} ${date.toLocaleTimeString('en-US')}`,
+        metric: rawData.metric,
+        unit: rawData.unit,
+        value: rawData.value,
+      });
+    }); 
+
+    if (data.getMeasurements[0].metric === 'oilTemp') {
+      dispatch(actions.oilChartDataReceived(dataWithReadableTime));
       //console.log('oil temp data');
-    } 
-
-    if (data.getMeasurements[0].metric === "waterTemp") {
-      dispatch(actions.waterChartDataReceived(data.getMeasurements));
     }
 
-    if (data.getMeasurements[0].metric === "flareTemp") {
-      dispatch(actions.flareChartDataReceived(data.getMeasurements));
+    if (data.getMeasurements[0].metric === 'waterTemp') {
+      dispatch(actions.waterChartDataReceived(dataWithReadableTime));
     }
 
-    if (data.getMeasurements[0].metric === "injValveOpen") {
-      dispatch(actions.injValveChartDataReceived(data.getMeasurements));
+    if (data.getMeasurements[0].metric === 'flareTemp') {
+      dispatch(actions.flareChartDataReceived(dataWithReadableTime));
     }
 
-    if (data.getMeasurements[0].metric === "tubingPressure") {
-      dispatch(actions.tubingPressureChartDataReceived(data.getMeasurements));
+    if (data.getMeasurements[0].metric === 'injValveOpen') {
+      dispatch(actions.injValveChartDataReceived(dataWithReadableTime));
     }
 
-    if (data.getMeasurements[0].metric === "casingPressure") {
-      dispatch(actions.casingPressureChartDataReceived(data.getMeasurements));
+    if (data.getMeasurements[0].metric === 'tubingPressure') {
+      dispatch(actions.tubingPressureChartDataReceived(dataWithReadableTime));
     }
 
+    if (data.getMeasurements[0].metric === 'casingPressure') {
+      dispatch(actions.casingPressureChartDataReceived(dataWithReadableTime));
+    }
   }, [data, error]);
 
   if (fetching) return <LinearProgress />;
@@ -103,7 +113,7 @@ export default function MetricCard({ title, timeStamp, metricReading }: CardProp
     <Card className={classes.root}>
       <CardContent>
         <Typography variant="h5" component="h2">
-         {title}
+          {title}
         </Typography>
         <Typography variant="body2" component="p">
           {metricReading}
