@@ -49,15 +49,19 @@ const chartData = [
   },
 ];
 
+type ChartProps = {
+  data: any;
+}
 
 
-const Chart = () => {
+
+const Chart = ({ data } : ChartProps) => {
   return (
     <div>
       <LineChart
         width={500}
         height={300}
-        data={chartData}
+        data={data}
         margin={{
           top: 5,
           right: 30,
@@ -66,12 +70,11 @@ const Chart = () => {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
+        <XAxis dataKey="at" />
         <YAxis />
         <Tooltip />
         <Legend />
-        <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+        <Line type="monotone" dataKey="value" stroke="#8884d8" activeDot={{ r: 8 }} />
       </LineChart>
     </div>
   );

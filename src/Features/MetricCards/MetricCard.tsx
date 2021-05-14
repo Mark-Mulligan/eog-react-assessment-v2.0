@@ -42,7 +42,7 @@ export default function MetricCard({ title, timeStamp, metricReading }: CardProp
 
   //const thirtyMinInterval = 30 * 60 * 1000;
   const oneMinInterval = 1 * 60 * 1000;
-  console.log('timestamp', timeStamp);
+  //console.log('timestamp', timeStamp);
   
   const input = {
     metricName: String(title),
@@ -72,7 +72,7 @@ export default function MetricCard({ title, timeStamp, metricReading }: CardProp
 
     if (data.getMeasurements[0].metric === "oilTemp") {
       dispatch(actions.oilChartDataReceived(data.getMeasurements));
-      console.log('oil temp data');
+      //console.log('oil temp data');
     }
 
   }, [data, error]);

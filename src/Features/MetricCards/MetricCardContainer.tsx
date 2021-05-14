@@ -11,10 +11,20 @@ const getMetricsSelected = (state: IState) => {
   };
 };
 
+const getChartData = (state: IState) => {
+  const { oilChartData } = state.chartData;
+  return {
+    oilChartData
+  }
+}
+
 const MetricCardContainer = () => {
   const [currentTime, setCurrentTime] = useState(0);
 
   const { metricsSelected } = useSelector(getMetricsSelected);
+  const { oilChartData } = useSelector(getChartData);
+
+  console.log('oilChartData', oilChartData);
 
   useEffect(() => {
     console.log(metricsSelected);
@@ -29,7 +39,7 @@ const MetricCardContainer = () => {
       })}
 
       
-      {metricsSelected.length > 0 && <Chart />}
+      {oilChartData.length > 0 && <Chart data={oilChartData}/>}
     
     </div>
   );
