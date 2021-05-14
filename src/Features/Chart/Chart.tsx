@@ -74,7 +74,7 @@ const Chart = ({ data } : ChartProps) => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Line type="monotone" dataKey="value" stroke="#8884d8" activeDot={{ r: 8 }} />
+        <Line type="monotone" dataKey="value" stroke="#8884d8" />
       </LineChart>
     </div>
   );

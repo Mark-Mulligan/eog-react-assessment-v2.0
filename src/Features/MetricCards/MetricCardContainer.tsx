@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { IState } from '../../store';
 import MetricCard from "./MetricCard";
-import Chart from "../Chart/Chart";
+//import Chart from "../Chart/Chart";
+import Chart2 from "../Chart/Chart2";
 
 const getMetricsSelected = (state: IState) => {
   const { metricsSelected } = state.metrics;
@@ -39,7 +40,7 @@ const MetricCardContainer = () => {
       })}
 
       
-      {oilChartData.length > 0 && <Chart data={oilChartData}/>}
+      {oilChartData.length > 0 && <Chart2 />}
     
     </div>
   );
