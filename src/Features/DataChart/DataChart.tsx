@@ -36,7 +36,7 @@ const Dashboard = () => {
       return;
     }
 
-    console.log(data)
+    //console.log(data)
     //const filteredOilT = data.filter((measurement: any) => measurement.metric === "oilTemp");
     //const otData = filteredOilT.slice(0,1).map((measurement: any) => measurement.value);;
 
