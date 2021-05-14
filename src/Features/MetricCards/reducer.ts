@@ -8,13 +8,18 @@ export type WaterData = {
   waterTemp: any;
 }
 
+export type FlareData = {
+  flareTemp: any;
+}
+
 export type ApiErrorAction = {
   error: string;
 };
 
 const initialState = {
   oilTemp: [],
-  waterTemp: []
+  waterTemp: [],
+  flareTemp: []
 };
 
 const slice = createSlice({
@@ -28,6 +33,10 @@ const slice = createSlice({
     waterChartDataReceived: (state, action: PayloadAction<WaterData>) => {
       const waterTemp = action.payload;
       state.waterTemp = waterTemp as any;
+    },
+    flareChartDataReceived: (state, action: PayloadAction<FlareData>) => {
+      const flareTemp = action.payload;
+      state.flareTemp = flareTemp as any;
     },
     measurmentApiErrorReceived: (state, action: PayloadAction<ApiErrorAction>) => state,
   },

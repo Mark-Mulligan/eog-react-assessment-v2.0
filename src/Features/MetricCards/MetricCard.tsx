@@ -79,6 +79,10 @@ export default function MetricCard({ title, timeStamp, metricReading }: CardProp
       dispatch(actions.waterChartDataReceived(data.getMeasurements));
     }
 
+    if (data.getMeasurements[0].metric === "flareTemp") {
+      dispatch(actions.flareChartDataReceived(data.getMeasurements));
+    }
+
   }, [data, error]);
 
   if (fetching) return <LinearProgress />;
