@@ -16,6 +16,10 @@ export type InjValveData = {
   injValveOpen: any;
 }
 
+export type TubbingData = {
+  tubingPressure: any;
+}
+
 export type ApiErrorAction = {
   error: string;
 };
@@ -24,7 +28,8 @@ const initialState = {
   oilTemp: [],
   waterTemp: [],
   flareTemp: [],
-  injValveOpen: []
+  injValveOpen: [],
+  tubingPressure: []
 };
 
 const slice = createSlice({
@@ -46,6 +51,10 @@ const slice = createSlice({
     injValveChartDataReceived: (state, action: PayloadAction<InjValveData>) => {
       const injValveOpen = action.payload;
       state.injValveOpen = injValveOpen as any;
+    },
+    tubingPressureChartDataReceived: (state, action: PayloadAction<TubbingData>) => {
+      const tubingPressure = action.payload;
+      state.tubingPressure = tubingPressure as any;
     },
     measurmentApiErrorReceived: (state, action: PayloadAction<ApiErrorAction>) => state,
   },
