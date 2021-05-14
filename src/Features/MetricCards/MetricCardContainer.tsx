@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { IState } from '../../store';
 import MetricCard from "./MetricCard";
 //import Chart from "../Chart/Chart";
-import Chart2 from "../Chart/Chart2";
+import Chart3 from "../Chart/Chart3";
 
 const getMetricsSelected = (state: IState) => {
   const { metricsSelected } = state.metrics;
@@ -13,9 +13,10 @@ const getMetricsSelected = (state: IState) => {
 };
 
 const getChartData = (state: IState) => {
-  const { oilChartData } = state.chartData;
+  const { oilTemp, waterTemp } = state.chartData;
   return {
-    oilChartData
+    oilTemp,
+    waterTemp
   }
 }
 
@@ -23,12 +24,24 @@ const MetricCardContainer = () => {
   const [currentTime, setCurrentTime] = useState(0);
 
   const { metricsSelected } = useSelector(getMetricsSelected);
-  const { oilChartData } = useSelector(getChartData);
+  const rawData = useSelector(getChartData);
 
-  console.log('oilChartData', oilChartData);
+
+ const formattedData: any = [];
+
+ //console.log('raw data', rawData);
+
+ metricsSelected.forEach(metric => {
+   formattedData.push({
+     name: metric,
+     data: rawData[metric]
+   })
+ })
+
+  console.log(formattedData);
 
   useEffect(() => {
-    console.log(metricsSelected);
+    //console.log(metricsSelected);
     let now = Date.now();
     setCurrentTime(now)
   }, [metricsSelected]);
@@ -40,7 +53,7 @@ const MetricCardContainer = () => {
       })}
 
       
-      {oilChartData.length > 0 && <Chart2 />}
+      {metricsSelected.length > 0 && <Chart3 data={formattedData} />}
     
     </div>
   );

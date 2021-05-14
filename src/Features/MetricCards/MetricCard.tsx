@@ -73,6 +73,10 @@ export default function MetricCard({ title, timeStamp, metricReading }: CardProp
     if (data.getMeasurements[0].metric === "oilTemp") {
       dispatch(actions.oilChartDataReceived(data.getMeasurements));
       //console.log('oil temp data');
+    } 
+
+    if (data.getMeasurements[0].metric === "waterTemp") {
+      dispatch(actions.waterChartDataReceived(data.getMeasurements));
     }
 
   }, [data, error]);

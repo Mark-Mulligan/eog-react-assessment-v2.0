@@ -1,24 +1,33 @@
 import { createSlice, PayloadAction } from 'redux-starter-kit';
 
-export type OilChartData = {
-  oilChartData: any;
+export type ChartData = {
+  oilTemp: any;
 };
+
+export type WaterData = {
+  waterTemp: any;
+}
 
 export type ApiErrorAction = {
   error: string;
 };
 
 const initialState = {
-  oilChartData: [],
+  oilTemp: [],
+  waterTemp: []
 };
 
 const slice = createSlice({
-  name: 'oilChartData',
+  name: 'oilTemp',
   initialState,
   reducers: {
-    oilChartDataReceived: (state, action: PayloadAction<OilChartData>) => {
-      const oilChartData = action.payload;
-      state.oilChartData = oilChartData as any;
+    oilChartDataReceived: (state, action: PayloadAction<ChartData>) => {
+      const oilTemp = action.payload;
+      state.oilTemp = oilTemp as any;
+    },
+    waterChartDataReceived: (state, action: PayloadAction<WaterData>) => {
+      const waterTemp = action.payload;
+      state.waterTemp = waterTemp as any;
     },
     measurmentApiErrorReceived: (state, action: PayloadAction<ApiErrorAction>) => state,
   },
