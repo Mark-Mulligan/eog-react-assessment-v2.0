@@ -12,6 +12,10 @@ export type FlareData = {
   flareTemp: any;
 }
 
+export type InjValveData = {
+  injValveOpen: any;
+}
+
 export type ApiErrorAction = {
   error: string;
 };
@@ -19,7 +23,8 @@ export type ApiErrorAction = {
 const initialState = {
   oilTemp: [],
   waterTemp: [],
-  flareTemp: []
+  flareTemp: [],
+  injValveOpen: []
 };
 
 const slice = createSlice({
@@ -37,6 +42,10 @@ const slice = createSlice({
     flareChartDataReceived: (state, action: PayloadAction<FlareData>) => {
       const flareTemp = action.payload;
       state.flareTemp = flareTemp as any;
+    },
+    injValveChartDataReceived: (state, action: PayloadAction<InjValveData>) => {
+      const injValveOpen = action.payload;
+      state.injValveOpen = injValveOpen as any;
     },
     measurmentApiErrorReceived: (state, action: PayloadAction<ApiErrorAction>) => state,
   },

@@ -83,6 +83,10 @@ export default function MetricCard({ title, timeStamp, metricReading }: CardProp
       dispatch(actions.flareChartDataReceived(data.getMeasurements));
     }
 
+    if (data.getMeasurements[0].metric === "injValveOpen") {
+      dispatch(actions.injValveChartDataReceived(data.getMeasurements));
+    }
+
   }, [data, error]);
 
   if (fetching) return <LinearProgress />;
