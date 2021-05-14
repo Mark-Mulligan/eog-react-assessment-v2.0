@@ -91,6 +91,10 @@ export default function MetricCard({ title, timeStamp, metricReading }: CardProp
       dispatch(actions.tubingPressureChartDataReceived(data.getMeasurements));
     }
 
+    if (data.getMeasurements[0].metric === "casingPressure") {
+      dispatch(actions.casingPressureChartDataReceived(data.getMeasurements));
+    }
+
   }, [data, error]);
 
   if (fetching) return <LinearProgress />;

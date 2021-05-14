@@ -20,6 +20,10 @@ export type TubbingData = {
   tubingPressure: any;
 }
 
+export type CasingData = {
+  casingPressure: any;
+}
+
 export type ApiErrorAction = {
   error: string;
 };
@@ -29,7 +33,8 @@ const initialState = {
   waterTemp: [],
   flareTemp: [],
   injValveOpen: [],
-  tubingPressure: []
+  tubingPressure: [],
+  casingPressure: []
 };
 
 const slice = createSlice({
@@ -55,6 +60,10 @@ const slice = createSlice({
     tubingPressureChartDataReceived: (state, action: PayloadAction<TubbingData>) => {
       const tubingPressure = action.payload;
       state.tubingPressure = tubingPressure as any;
+    },
+    casingPressureChartDataReceived: (state, action: PayloadAction<CasingData>) => {
+      const casingPressure = action.payload;
+      state.casingPressure = casingPressure as any;
     },
     measurmentApiErrorReceived: (state, action: PayloadAction<ApiErrorAction>) => state,
   },

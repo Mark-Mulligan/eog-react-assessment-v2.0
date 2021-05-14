@@ -13,13 +13,14 @@ const getMetricsSelected = (state: IState) => {
 };
 
 const getChartData = (state: IState) => {
-  const { oilTemp, waterTemp, flareTemp, injValveOpen, tubingPressure } = state.chartData;
+  const { oilTemp, waterTemp, flareTemp, injValveOpen, tubingPressure, casingPressure } = state.chartData;
   return {
     oilTemp,
     waterTemp,
     flareTemp,
     injValveOpen,
-    tubingPressure
+    tubingPressure,
+    casingPressure
   }
 }
 
