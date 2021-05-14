@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { Provider, createClient, subscriptionExchange, defaultExchanges } from 'urql';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const subscriptionClient = new SubscriptionClient('ws://react.eogresources.com/graphql', { reconnect: true });
 

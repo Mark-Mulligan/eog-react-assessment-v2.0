@@ -9,6 +9,7 @@ import Header from './components/Header';
 import Wrapper from './components/Wrapper';
 import DataChart from './Features/DataChart/DataChart';
 import MetricSelect from './Features/MetricSelect/MetricSelect';
+import MetricCardContainer from './Features/MetricCards/MetricCardContainer';
 
 const store = createStore();
 const theme = createMuiTheme({
@@ -32,7 +33,7 @@ const App = () => (
       <Wrapper>
         <Header />
         <MetricSelect />
-        <DataChart />
+        <MetricCardContainer />
         <ToastContainer />
       </Wrapper>
     </Provider>

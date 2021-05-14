@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { useSubscription } from 'urql';
+import { useDispatch, useSelector } from 'react-redux';
+import { IState } from '../../store';
+import { useSubscription, useQuery } from 'urql';
 
 const newMeasurement = `
 subscription {
@@ -13,7 +15,7 @@ subscription {
 }
 `;
 
-const handleSubscription = (messages = [], response: { newMeasurement: any; }) => {
+const handleSubscription = (messages = [], response: { newMeasurement: any }) => {
   return [response.newMeasurement, ...messages];
 };
 
@@ -21,7 +23,6 @@ const Dashboard = () => {
   const [metricData, setMetricData] = useState(0);
 
   const [result] = useSubscription({ query: newMeasurement }, handleSubscription as any);
-
   const { data, error } = result;
 
   //const filteredOilT = res.data.filter((measurement: any) => measurement.metric === "oilTemp")
@@ -36,7 +37,7 @@ const Dashboard = () => {
       return;
     }
 
-    //console.log(data)
+    console.log(data)
     //const filteredOilT = data.filter((measurement: any) => measurement.metric === "oilTemp");
     //const otData = filteredOilT.slice(0,1).map((measurement: any) => measurement.value);;
 
@@ -45,12 +46,7 @@ const Dashboard = () => {
       setMetricData(otData[0]);
       //console.log(otData);
     } */
-    
-    
-
-  }, [data, error])
-  
-
+  }, [data, error]);
 
   return (
     <div>
@@ -61,5 +57,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-
