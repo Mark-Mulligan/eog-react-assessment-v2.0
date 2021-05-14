@@ -10,6 +10,7 @@ import Wrapper from './components/Wrapper';
 import DataChart from './Features/DataChart/DataChart';
 import MetricSelect from './Features/MetricSelect/MetricSelect';
 import MetricCardContainer from './Features/MetricCards/MetricCardContainer';
+import './App.css';
 
 const store = createStore();
 const theme = createMuiTheme({

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { IState } from '../../store';
 import MetricCard from "./MetricCard";
+import Chart from "../Chart/Chart";
 
 const getMetricsSelected = (state: IState) => {
   const { metricsSelected } = state.metrics;
@@ -26,6 +27,10 @@ const MetricCardContainer = () => {
       {metricsSelected.length > 0 && metricsSelected.map(metric => {
         return <MetricCard key={metric} title={metric} timeStamp={currentTime} metricReading="250 F" />
       })}
+
+      
+      {metricsSelected.length > 0 && <Chart />}
+    
     </div>
   );
 };

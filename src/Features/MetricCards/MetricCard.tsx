@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { actions } from './reducer';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -16,36 +18,11 @@ const useStyles = makeStyles({
   },
 });
 
-/* const query = `
-query($metricName: String!) {
-  getLastKnownMeasurement(metricName: $metricName) {
-  	metric
-    value
-    unit
-    at
-  }
-}
-`; */
-
 type CardProps = {
   title: string,
   timeStamp: number,
   metricReading: string
 }
-
-/* const query = `
-query($input: MeasurementQuery) {
-  getMeasurements(input: {
-    metricName: "oilTemp"
-    after: $after
-  }) {
-    at
-    metric
-    value
-    unit
-  }
-}
-`; */
 
 const query = `
 query($input: MeasurementQuery!) {
@@ -58,30 +35,19 @@ query($input: MeasurementQuery!) {
 }
 `;
 
-
-/* let currentTime = Date.now();
-  let past30Min = currentTime - 1800000;
-  console.log(past30Min);
-
-  const [historicalData] = useQuery({
-    query,
-    variables: {
-      metricType: "oilTemp",
-      after: past30Min
-    },
-  }); */
-
 export default function MetricCard({ title, timeStamp, metricReading }: CardProps) {
   const classes = useStyles();
 
+  const dispatch = useDispatch();
+
   //const thirtyMinInterval = 30 * 60 * 1000;
-  const fiveMinInterval = 5 * 60 * 1000;
+  const oneMinInterval = 1 * 60 * 1000;
   console.log('timestamp', timeStamp);
   
   const input = {
     metricName: String(title),
     before: timeStamp,
-    after: timeStamp-fiveMinInterval,
+    after: timeStamp-oneMinInterval,
   };
 
   const [result] = useQuery({
@@ -96,12 +62,19 @@ export default function MetricCard({ title, timeStamp, metricReading }: CardProp
 
   useEffect(() => {
     if (error) {
+      dispatch(actions.measurmentApiErrorReceived({ error: error.message }));
       return;
     }
 
     if (!data) return;
 
-    console.log('oil data', data);
+    console.log(data.getMeasurements);
+
+    if (data.getMeasurements[0].metric === "oilTemp") {
+      dispatch(actions.oilChartDataReceived(data.getMeasurements));
+      console.log('oil temp data');
+    }
+
   }, [data, error]);
 
   if (fetching) return <LinearProgress />;
