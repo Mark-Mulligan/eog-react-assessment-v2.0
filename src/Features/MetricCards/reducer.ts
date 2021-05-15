@@ -5,96 +5,106 @@ export type OilData = {
 };
 
 export type NewMetricData = {
-    dateTime: '',
-    at: 0,
-    metric: '',
-    unit: '',
-    value: 0
-}
+  dateTime: '';
+  at: 0;
+  metric: '';
+  unit: '';
+  value: 0;
+};
 
 export type WaterData = {
   waterTemp: any;
-}
+};
 
 export type FlareData = {
   flareTemp: any;
-}
+};
 
 export type InjValveData = {
   injValveOpen: any;
-}
+};
 
 export type TubbingData = {
   tubingPressure: any;
-}
+};
 
 export type CasingData = {
   casingPressure: any;
-}
+};
 
 export type ApiErrorAction = {
   error: string;
 };
 
 const initialState = {
-  oilTemp: [{
-    dateTime: '',
-    at: 0,
-    metric: '',
-    unit: '',
-    value: 0
-  }],
+  oilHistoryRequested: false,
+  oilTemp: [
+    {
+      dateTime: '',
+      at: 0,
+      metric: '',
+      unit: '',
+      value: 0,
+    },
+  ],
   currentOilData: {
     dateTime: '',
     at: 0,
     metric: '',
     unit: '',
-    value: 0
+    value: 0,
   },
-  waterTemp: [{
-    dateTime: '',
-    at: 0,
-    metric: '',
-    unit: '',
-    value: 0
-  }],
+  waterHistoryRequested: false,
+  waterTemp: [
+    {
+      dateTime: '',
+      at: 0,
+      metric: '',
+      unit: '',
+      value: 0,
+    },
+  ],
   currentWaterTemp: {
     dateTime: '',
     at: 0,
     metric: '',
     unit: '',
-    value: 0
+    value: 0,
   },
-  flareTemp: [{
-    dateTime: '',
-    at: 0,
-    metric: '',
-    unit: '',
-    value: 0
-  }],
+  flareTemp: [
+    {
+      dateTime: '',
+      at: 0,
+      metric: '',
+      unit: '',
+      value: 0,
+    },
+  ],
   currentFlareTemp: {
     dateTime: '',
     at: 0,
     metric: '',
     unit: '',
-    value: 0
+    value: 0,
   },
-  injValveOpen: [{
-    dateTime: '',
-    at: 0,
-    metric: '',
-    unit: '',
-    value: 0
-  }],
+  injValveOpen: [
+    {
+      dateTime: '',
+      at: 0,
+      metric: '',
+      unit: '',
+      value: 0,
+    },
+  ],
   currentInjValve: {
     dateTime: '',
     at: 0,
     metric: '',
     unit: '',
-    value: 0
+    value: 0,
   },
   tubingPressure: [],
-  casingPressure: []
+  casingPressure: [],
 };
 
 const slice = createSlice({
@@ -102,8 +112,12 @@ const slice = createSlice({
   initialState,
   reducers: {
     oilChartDataReceived: (state, action: PayloadAction<OilData>) => {
-      const oilTemp = action.payload;
-      state.oilTemp = oilTemp as any;
+      if (state.oilHistoryRequested === false) {
+        const pastOilTemp: any = action.payload;
+        const currentOilTemp: any = state.oilTemp;
+        state.oilTemp = [...pastOilTemp, ...currentOilTemp];
+        state.oilHistoryRequested = true;
+      }
     },
     oilDataUpdate: (state, action: PayloadAction<NewMetricData>) => {
       const oilTemp = action.payload;
@@ -117,11 +131,21 @@ const slice = createSlice({
       state.currentOilData = oilTemp;
     },
     waterChartDataReceived: (state, action: PayloadAction<WaterData>) => {
-      const waterTemp = action.payload;
-      state.waterTemp = waterTemp as any;
+      if (state.waterHistoryRequested === false) {
+        const pastWaterTemp: any = action.payload;
+        const currentWaterTemp: any = state.waterTemp;
+        state.waterTemp = [...pastWaterTemp, ...currentWaterTemp];
+        state.waterHistoryRequested = true;
+      }
     },
     waterDataUpdate: (state, action: PayloadAction<NewMetricData>) => {
       const waterTemp = action.payload;
+      if (state.waterTemp[0].at === 0) {
+        state.waterTemp[0] = waterTemp;
+        state.currentWaterTemp = waterTemp;
+        return;
+      }
+
       state.waterTemp.push(waterTemp);
       state.currentWaterTemp = waterTemp;
     },

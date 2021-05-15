@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 });
 
 const getCurrentData = (state: IState) => {
-  const { currentOilData, currentWaterTemp, currentFlareTemp, currentInjValve } = state.chartData;
+  const { currentOilData, currentWaterTemp, currentFlareTemp, currentInjValve, } = state.chartData;
   return {
     currentOilData,
     currentWaterTemp,
@@ -28,6 +28,13 @@ const getCurrentData = (state: IState) => {
     currentInjValve
   };
 };
+
+const getSubscriptionStart = (state: IState) => {
+  const { subscriptionStart } = state.subscriptionStart;
+  return {
+    subscriptionStart
+  }
+}
 
 type CardProps = {
   title: string;
@@ -49,15 +56,16 @@ export default function MetricCard({ title, timeStamp }: CardProps) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  //const thirtyMinInterval = 30 * 60 * 1000;
-  const oneMinInterval = 1 * 60 * 1000;
-  //console.log('timestamp', timeStamp);
   const { currentOilData, currentWaterTemp, currentFlareTemp, currentInjValve } = useSelector(getCurrentData);
+  const { subscriptionStart } = useSelector(getSubscriptionStart);
+  const oneMinInterval = 1 * 60 * 1000;
+
+  console.log(subscriptionStart);
 
   const input = {
     metricName: String(title),
-    before: timeStamp,
-    after: timeStamp - oneMinInterval,
+    before: subscriptionStart,
+    after: subscriptionStart - oneMinInterval,
   };
 
   const [result] = useQuery({
@@ -77,9 +85,14 @@ export default function MetricCard({ title, timeStamp }: CardProps) {
       return;
     }
 
-    if (!data) return;
+    if (!data) {
+      console.log('no data');
+      return;
+    }
 
     const dataWithReadableTime: any = [];
+
+    console.log(data);
 
     data.getMeasurements.forEach((rawData: any) => {
       let date = new Date(rawData.at);

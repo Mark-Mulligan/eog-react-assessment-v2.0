@@ -96,7 +96,7 @@ const Dashboard = () => {
     const ivData = filteredInjV.slice(0, 1).map((measurement: any) => measurement);
 
     if (filteredOilT.length === 1) {
-      dispatch(dashboardActions.subscriptionStartTime(otData[0].at))
+      dispatch(dashboardActions.subscriptionStartTime(otData[0].at));
     }
 
     if (currentOilData.at !== otData[0].at) {
@@ -108,12 +108,7 @@ const Dashboard = () => {
     if (wtData.length > 0 && currentWaterData.at !== wtData[0].at) {
       const newWaterData = createMetricDataObj(wtData[0]);
       setCurrentWaterData(newWaterData);
-
-      const metricsCopy: any = metricsSelected;
-
-      if (metricsCopy.includes('waterTemp')) {
-        dispatch(actions.waterDataUpdate(newWaterData));
-      }
+      dispatch(actions.waterDataUpdate(newWaterData));
     }
 
     if (ftData.length > 0 && currentFlareData.at !== ftData[0].at) {
