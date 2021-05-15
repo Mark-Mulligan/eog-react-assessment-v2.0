@@ -91,10 +91,7 @@ const initialState = {
   injValveHistoryRequested: false,
   injValveOpen: [
     {
-      dateTime: '',
       at: 0,
-      metric: '',
-      unit: '',
       value: 0,
     },
   ],
@@ -105,7 +102,18 @@ const initialState = {
     unit: '',
     value: 0,
   },
-  tubingPressure: [],
+  tubingPressureHistoryRequested: false,
+  tubingPressure: [{
+    at: 0,
+    value: 0
+  }],
+  currentTubingPresssure: {
+    dateTime: '',
+    at: 0,
+    metric: '',
+    unit: '',
+    value: 0,
+  },
   casingPressure: [],
 };
 
@@ -190,9 +198,24 @@ const slice = createSlice({
       state.currentInjValve = injValve;
     },
     tubingPressureChartDataReceived: (state, action: PayloadAction<TubbingData>) => {
-      const tubingPressure = action.payload;
-      state.tubingPressure = tubingPressure as any;
+      if (state.tubingPressureHistoryRequested === false) {
+        const pastTubingPressure: any = action.payload;
+        const currentTubingPresssure: any = state.tubingPressure;
+        state.tubingPressure = [...pastTubingPressure, ...currentTubingPresssure];
+        state.tubingPressureHistoryRequested = true;
+      }
     },
+    tubingPressureDataUpdate: (state, action: PayloadAction<NewMetricData>) => {
+      const tubingPressure = action.payload;
+      if (state.tubingPressure[0].at === 0) {
+        state.tubingPressure[0] = tubingPressure;
+        state.currentTubingPresssure = tubingPressure;
+      }
+
+      state.tubingPressure.push(tubingPressure);
+      state.currentTubingPresssure = tubingPressure;
+    },
+
     casingPressureChartDataReceived: (state, action: PayloadAction<CasingData>) => {
       const casingPressure = action.payload;
       state.casingPressure = casingPressure as any;

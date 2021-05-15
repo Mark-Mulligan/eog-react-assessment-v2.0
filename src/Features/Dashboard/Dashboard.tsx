@@ -54,9 +54,16 @@ const Dashboard = () => {
       dispatch(actions.flareDataUpdate(data[0]));
     }
 
-    if (data.lenght === 5 || data.length % 6 === 5) {
+    if (data.length === 5 || data.length % 6 === 5) {
       dispatch(actions.injValveDataUpdate(data[0]));
     }
+
+    if (data.length === 2 || data.length % 6 === 2) {
+      console.log(data[0]);
+      dispatch(actions.tubingPressureDataUpdate(data[0]));
+    }
+
+   
 
   }, [data, error]);
 

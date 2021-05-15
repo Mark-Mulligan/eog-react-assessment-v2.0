@@ -20,12 +20,13 @@ const useStyles = makeStyles({
 });
 
 const getCurrentData = (state: IState) => {
-  const { currentOilData, currentWaterTemp, currentFlareTemp, currentInjValve, } = state.chartData;
+  const { currentOilData, currentWaterTemp, currentFlareTemp, currentInjValve, currentTubingPresssure } = state.chartData;
   return {
     currentOilData,
     currentWaterTemp,
     currentFlareTemp,
-    currentInjValve
+    currentInjValve,
+    currentTubingPresssure
   };
 };
 
@@ -44,10 +45,8 @@ type CardProps = {
 const query = `
 query($input: MeasurementQuery!) {
   getMeasurements(input: $input) {
-    metric
     at
     value
-    unit
   }
 }
 `;
@@ -56,7 +55,7 @@ export default function MetricCard({ title, timeStamp }: CardProps) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { currentOilData, currentWaterTemp, currentFlareTemp, currentInjValve } = useSelector(getCurrentData);
+  const { currentOilData, currentWaterTemp, currentFlareTemp, currentInjValve, currentTubingPresssure} = useSelector(getCurrentData);
   const { subscriptionStart } = useSelector(getSubscriptionStart);
   const oneMinInterval = 1 * 60 * 1000;
 
@@ -76,7 +75,6 @@ export default function MetricCard({ title, timeStamp }: CardProps) {
   const { fetching, data, error } = result;
 
   useEffect(() => {
-    console.log('Metric Card Useffect Ran');
 
     if (error) {
       dispatch(actions.measurmentApiErrorReceived({ error: error.message }));
@@ -88,31 +86,29 @@ export default function MetricCard({ title, timeStamp }: CardProps) {
       return;
     }
 
-    console.log(data);
-
 
     // Switch statment did not work, caused data to be overidden as more charts were added.  
-    if (data.getMeasurements[0].metric === 'oilTemp') {
+    if (title === 'oilTemp') {
       dispatch(actions.oilChartDataReceived(data.getMeasurements));
     }
 
-    if (data.getMeasurements[0].metric === 'waterTemp') {
+    if (title === 'waterTemp') {
       dispatch(actions.waterChartDataReceived(data.getMeasurements));
     }
 
-    if (data.getMeasurements[0].metric === 'flareTemp') {
+    if (title === 'flareTemp') {
       dispatch(actions.flareChartDataReceived(data.getMeasurements));
     }
 
-    if (data.getMeasurements[0].metric === 'injValveOpen') {
+    if (title === 'injValveOpen') {
       dispatch(actions.injValveChartDataReceived(data.getMeasurements));
     }
 
-    if (data.getMeasurements[0].metric === 'tubingPressure') {
+    if (title === 'tubingPressure') {
       dispatch(actions.tubingPressureChartDataReceived(data.getMeasurements));
     }
 
-    if (data.getMeasurements[0].metric === 'casingPressure') {
+    if (title === 'casingPressure') {
       dispatch(actions.casingPressureChartDataReceived(data.getMeasurements));
     } 
   }, [data, error]);
@@ -126,10 +122,11 @@ export default function MetricCard({ title, timeStamp }: CardProps) {
           {title}
         </Typography>
         <Typography variant="body2" component="p">
-          {title === 'oilTemp' && `${currentOilData.value} ${currentOilData.unit}`}
-          {title === 'waterTemp' && `${currentWaterTemp.value} ${currentWaterTemp.unit}`}
-          {title === 'flareTemp' &&`${currentFlareTemp.value} ${currentFlareTemp.unit}` }
-          {title === 'injValveOpen' && `${currentInjValve.value} ${currentInjValve.unit}`}
+          {title === 'oilTemp' && `${currentOilData.value} F`}
+          {title === 'waterTemp' && `${currentWaterTemp.value} F`}
+          {title === 'flareTemp' &&`${currentFlareTemp.value} F` }
+          {title === 'injValveOpen' && `${currentInjValve.value} %`}
+          {title === 'tubingPressure' && `${currentTubingPresssure.value} PSI`}
         </Typography>
       </CardContent>
     </Card>
