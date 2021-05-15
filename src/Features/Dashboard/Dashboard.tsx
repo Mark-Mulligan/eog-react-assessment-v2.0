@@ -89,17 +89,26 @@ const Dashboard = () => {
 
     //console.log(data);
 
-    let oilTempData: any= {};
     let waterTempData: any= {};
     let flareTempData: any = {};
     let injValveData: any = {};
+    
+    if (data.length === 1 || data.length % 6 === 1) {
+      dispatch(actions.oilDataUpdate(data[0]));
+      setCurrentOilData(data[0]);
 
-    for (let i = 0; i < data.length; i++) {
+      if (subscriptionStarted === false) {
+        setSubscriptionStarted(true);
+        dispatch(dashboardActions.subscriptionStartTime(data[0]));
+      }
+    }
+
+    /* for (let i = 0; i < data.length; i++) {
       if (data[i].metric === 'oilTemp') {
         oilTempData = data[i];
         i = data.length;
       }
-    }
+    } */
 
     for (let i = 0; i < data.length; i++) {
       if (data[i].metric === 'waterTemp') {
@@ -131,20 +140,17 @@ const Dashboard = () => {
     //const filteredInjV = data.filter((newMeasurement: any) => newMeasurement.metric === 'injValveOpen');
     //const ivData = filteredInjV.slice(0, 1).map((measurement: any) => measurement);
 
-    if (subscriptionStarted === false) {
-      setSubscriptionStarted(true);
-      dispatch(dashboardActions.subscriptionStartTime(oilTempData.at));
-    }
+
 
     /* if (currentOilData.at !== otData[0].at) {
       dispatch(actions.oilDataUpdate(otData[0]));
       setCurrentOilData(otData[0]);
     } */
 
-    if (currentOilData.at !== oilTempData.at) {
+    /* if (currentOilData.at !== oilTempData.at) {
       dispatch(actions.oilDataUpdate(oilTempData));
       setCurrentOilData(oilTempData);
-    }
+    } */
 
     if (JSON.stringify(waterTempData) !== '{}' && currentWaterData.at !== waterTempData.at) {
       dispatch(actions.waterDataUpdate(waterTempData));
