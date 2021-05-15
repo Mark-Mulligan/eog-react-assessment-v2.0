@@ -71,6 +71,7 @@ const initialState = {
     unit: '',
     value: 0,
   },
+  flareHistoryRequested: false,
   flareTemp: [
     {
       dateTime: '',
@@ -150,11 +151,21 @@ const slice = createSlice({
       state.currentWaterTemp = waterTemp;
     },
     flareChartDataReceived: (state, action: PayloadAction<FlareData>) => {
-      const flareTemp = action.payload;
-      state.flareTemp = flareTemp as any;
+      if (state.flareHistoryRequested === false) {
+        const pastFlareTemp: any = action.payload;
+        const currentFlareTemp: any = state.flareTemp;
+        state.flareTemp = [...pastFlareTemp, ...currentFlareTemp];
+        state.flareHistoryRequested = true;
+      }
     },
     flareDataUpdate: (state, action: PayloadAction<NewMetricData>) => {
       const flareTemp = action.payload;
+      if (state.flareTemp[0].at === 0) {
+        state.flareTemp[0] = flareTemp;
+        state.currentFlareTemp = flareTemp;
+        return;
+      }
+
       state.flareTemp.push(flareTemp);
       state.currentFlareTemp = flareTemp;
     },

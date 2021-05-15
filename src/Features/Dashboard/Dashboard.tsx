@@ -114,12 +114,8 @@ const Dashboard = () => {
     if (ftData.length > 0 && currentFlareData.at !== ftData[0].at) {
       const newFlareData = createMetricDataObj(ftData[0]);
       setCurrentFlareData(newFlareData);
-
-      const metricsCopy: any = metricsSelected;
-
-      if (metricsCopy.includes('flareTemp')) {
-        dispatch(actions.flareDataUpdate(newFlareData));
-      }
+      console.log(newFlareData);
+      dispatch(actions.flareDataUpdate(newFlareData)); 
     }
 
     if (ivData.length > 0 && currentInjValve.at !== ivData[0].at) {
