@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../MetricCards/reducer';
+import { actions as dashboardActions } from './reducer';
 import { IState } from '../../store';
 import { useSubscription } from 'urql';
 
@@ -61,7 +62,14 @@ const Dashboard = () => {
     metric: '',
     at: 0,
     dateTime: '',
-  })
+  });
+  const [currentInjValve, setCurrentInjValve] = useState({
+    value: 0,
+    unit: '',
+    metric: '',
+    at: 0,
+    dateTime: '',
+  });
 
   const dispatch = useDispatch();
   const { metricsSelected } = useSelector(getMetricsSelected);
@@ -84,16 +92,17 @@ const Dashboard = () => {
     const wtData = filteredWaterT.slice(0, 1).map((measurement: any) => measurement);
     const filteredFlareT = data.filter((measurement: any) => measurement.metric === 'flareTemp');
     const ftData = filteredFlareT.slice(0, 1).map((measurement: any) => measurement);
+    const filteredInjV = data.filter((newMeasurement: any) => newMeasurement.metric === 'injValveOpen');
+    const ivData = filteredInjV.slice(0, 1).map((measurement: any) => measurement);
+
+    if (filteredOilT.length === 1) {
+      dispatch(dashboardActions.subscriptionStartTime(otData[0].at))
+    }
 
     if (currentOilData.at !== otData[0].at) {
       const newOilData = createMetricDataObj(otData[0]);
-      setCurrentOilData(newOilData); 
-
-      const metricArr: any = metricsSelected;
-
-      if (metricArr.includes('oilTemp')) {
-        dispatch(actions.oilDataUpdate(newOilData));
-      }
+      setCurrentOilData(newOilData);
+      dispatch(actions.oilDataUpdate(newOilData));
     }
 
     if (wtData.length > 0 && currentWaterData.at !== wtData[0].at) {
@@ -115,6 +124,16 @@ const Dashboard = () => {
 
       if (metricsCopy.includes('flareTemp')) {
         dispatch(actions.flareDataUpdate(newFlareData));
+      }
+    }
+
+    if (ivData.length > 0 && currentInjValve.at !== ivData[0].at) {
+      const newInjValveData = createMetricDataObj(ivData[0]);
+      setCurrentInjValve(newInjValveData);
+
+      const metricsCopy: any = metricsSelected;
+      if (metricsCopy.includes('injValveOpen')) {
+        dispatch(actions.injValveDataUpdate(newInjValveData));
       }
     }
   }, [data, error]);

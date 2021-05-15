@@ -73,7 +73,9 @@ const MetricSelect = () => {
     dispatch(actions.metricsAvailable(getMetrics));
   }, [data, error, dispatch, metricsSelected]);
 
-  if (fetching) return <LinearProgress />;
+  if (fetching) {
+    return <LinearProgress />;
+  }
 
   return (
     <div className="container mt-5">

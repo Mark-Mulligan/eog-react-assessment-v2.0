@@ -20,11 +20,12 @@ const useStyles = makeStyles({
 });
 
 const getCurrentData = (state: IState) => {
-  const { currentOilData, currentWaterTemp, currentFlareTemp } = state.chartData;
+  const { currentOilData, currentWaterTemp, currentFlareTemp, currentInjValve } = state.chartData;
   return {
     currentOilData,
     currentWaterTemp,
-    currentFlareTemp
+    currentFlareTemp,
+    currentInjValve
   };
 };
 
@@ -49,9 +50,9 @@ export default function MetricCard({ title, timeStamp }: CardProps) {
   const dispatch = useDispatch();
 
   //const thirtyMinInterval = 30 * 60 * 1000;
-  const oneMinInterval = 30 * 60 * 1000;
+  const oneMinInterval = 1 * 60 * 1000;
   //console.log('timestamp', timeStamp);
-  const { currentOilData, currentWaterTemp, currentFlareTemp } = useSelector(getCurrentData);
+  const { currentOilData, currentWaterTemp, currentFlareTemp, currentInjValve } = useSelector(getCurrentData);
 
   const input = {
     metricName: String(title),
@@ -69,6 +70,8 @@ export default function MetricCard({ title, timeStamp }: CardProps) {
   const { fetching, data, error } = result;
 
   useEffect(() => {
+    console.log('Metric Card Useffect Ran');
+
     if (error) {
       dispatch(actions.measurmentApiErrorReceived({ error: error.message }));
       return;
@@ -129,6 +132,7 @@ export default function MetricCard({ title, timeStamp }: CardProps) {
           {title === 'oilTemp' && `${currentOilData.value} ${currentOilData.unit}`}
           {title === 'waterTemp' && `${currentWaterTemp.value} ${currentWaterTemp.unit}`}
           {title === 'flareTemp' &&`${currentFlareTemp.value} ${currentFlareTemp.unit}` }
+          {title === 'injValveOpen' && `${currentInjValve.value} ${currentInjValve.unit}`}
         </Typography>
       </CardContent>
     </Card>

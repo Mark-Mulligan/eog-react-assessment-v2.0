@@ -79,7 +79,20 @@ const initialState = {
     unit: '',
     value: 0
   },
-  injValveOpen: [],
+  injValveOpen: [{
+    dateTime: '',
+    at: 0,
+    metric: '',
+    unit: '',
+    value: 0
+  }],
+  currentInjValve: {
+    dateTime: '',
+    at: 0,
+    metric: '',
+    unit: '',
+    value: 0
+  },
   tubingPressure: [],
   casingPressure: []
 };
@@ -89,12 +102,17 @@ const slice = createSlice({
   initialState,
   reducers: {
     oilChartDataReceived: (state, action: PayloadAction<OilData>) => {
-      console.log('redux state', state.oilTemp);
       const oilTemp = action.payload;
       state.oilTemp = oilTemp as any;
     },
     oilDataUpdate: (state, action: PayloadAction<NewMetricData>) => {
       const oilTemp = action.payload;
+      if (state.oilTemp[0].at === 0) {
+        state.oilTemp[0] = oilTemp;
+        state.currentOilData = oilTemp;
+        return;
+      }
+
       state.oilTemp.push(oilTemp);
       state.currentOilData = oilTemp;
     },
@@ -119,6 +137,11 @@ const slice = createSlice({
     injValveChartDataReceived: (state, action: PayloadAction<InjValveData>) => {
       const injValveOpen = action.payload;
       state.injValveOpen = injValveOpen as any;
+    },
+    injValveDataUpdate: (state, action: PayloadAction<NewMetricData>) => {
+      const injValveOpen = action.payload;
+      state.injValveOpen.push(injValveOpen);
+      state.currentInjValve = injValveOpen;
     },
     tubingPressureChartDataReceived: (state, action: PayloadAction<TubbingData>) => {
       const tubingPressure = action.payload;

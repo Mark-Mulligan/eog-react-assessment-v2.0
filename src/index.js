@@ -3,9 +3,24 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { Provider, createClient, subscriptionExchange, defaultExchanges } from 'urql';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
+//import { Provider, createClient, subscriptionExchange, dedupExchange, fetchExchange } from 'urql';
+//import { cacheExchange } from '@urql/exchange-graphcache';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const subscriptionClient = new SubscriptionClient('ws://react.eogresources.com/graphql', { reconnect: true });
+
+/* const client = createClient({
+  url: 'https://react.eogresources.com/graphql',
+  exchanges: [
+    dedupExchange,
+    cache,
+    fetchExchange,
+    subscriptionExchange({
+      forwardSubscription: operation => subscriptionClient.request(operation),
+    })
+  ],
+});  */
 
 const client = createClient({
   url: 'https://react.eogresources.com/graphql',
@@ -15,7 +30,7 @@ const client = createClient({
       forwardSubscription: operation => subscriptionClient.request(operation),
     }),
   ],
-});
+});   
 
 ReactDOM.render(
   <Provider value={client}>
