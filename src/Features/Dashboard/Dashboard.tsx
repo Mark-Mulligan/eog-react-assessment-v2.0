@@ -37,6 +37,13 @@ const Dashboard = () => {
     at: 0,
     dateTime: ''
   });
+  const [currentWaterData, setCurrentWaterData] = useState({
+    value: 0,
+    unit: '',
+    metric: '',
+    at: 0,
+    dateTime: ''
+  })
 
 
   const dispatch = useDispatch();
@@ -56,6 +63,8 @@ const Dashboard = () => {
 
     const filteredOilT = data.filter((measurement: any) => measurement.metric === 'oilTemp');
     const otData = filteredOilT.slice(0, 1).map((measurement: any) => measurement);
+    const filteredWaterT = data.filter((measurement: any) => measurement.metric === 'waterTemp');
+    const wtData = filteredWaterT.slice(0, 1).map((measurement: any) => measurement);
 
     if (currentOilData.at !== otData[0].at) {
       //console.log(currentOilData, otData[0]);
@@ -71,13 +80,32 @@ const Dashboard = () => {
 
       setCurrentOilData(newOilData);
 
-      const testArr: any = metricsSelected
+      const testArr: any = metricsSelected;
 
       if (testArr.includes("oilTemp")) {
         dispatch(actions.oilDataUpdate(newOilData));
       }
-      //console.log(otData);
     }
+
+    if (wtData.length > 0 && currentWaterData.at !== wtData[0].at) {
+      let date = new Date(wtData[0].at);
+
+      const newWaterData: any = {
+        at: wtData[0].at,
+        value: wtData[0].value,
+        unit: wtData[0].unit,
+        metric: wtData[0].metric,
+        dateTime: `${date.toLocaleDateString()} ${date.toLocaleTimeString('en-US')}`
+      }
+
+      setCurrentWaterData(newWaterData);
+
+      const metricsCopy: any = metricsSelected;
+
+      if (metricsCopy.includes("waterTemp")) {
+        dispatch(actions.waterDataUpdate(newWaterData));
+      } 
+    } 
   }, [data, error]);
 
   return (

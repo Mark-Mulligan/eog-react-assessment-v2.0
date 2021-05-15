@@ -4,8 +4,8 @@ export type OilData = {
   oilTemp: any;
 };
 
-export type NewOilData = {
-  dateTime: '',
+export type NewMetricData = {
+    dateTime: '',
     at: 0,
     metric: '',
     unit: '',
@@ -51,7 +51,20 @@ const initialState = {
     unit: '',
     value: 0
   },
-  waterTemp: [],
+  waterTemp: [{
+    dateTime: '',
+    at: 0,
+    metric: '',
+    unit: '',
+    value: 0
+  }],
+  currentWaterTemp: {
+    dateTime: '',
+    at: 0,
+    metric: '',
+    unit: '',
+    value: 0
+  },
   flareTemp: [],
   injValveOpen: [],
   tubingPressure: [],
@@ -67,7 +80,7 @@ const slice = createSlice({
       const oilTemp = action.payload;
       state.oilTemp = oilTemp as any;
     },
-    oilDataUpdate: (state, action: PayloadAction<NewOilData>) => {
+    oilDataUpdate: (state, action: PayloadAction<NewMetricData>) => {
       const oilTemp = action.payload;
       state.oilTemp.push(oilTemp);
       state.currentOilData = oilTemp;
@@ -75,6 +88,11 @@ const slice = createSlice({
     waterChartDataReceived: (state, action: PayloadAction<WaterData>) => {
       const waterTemp = action.payload;
       state.waterTemp = waterTemp as any;
+    },
+    waterDataUpdate: (state, action: PayloadAction<NewMetricData>) => {
+      const waterTemp = action.payload;
+      state.waterTemp.push(waterTemp);
+      state.currentWaterTemp = waterTemp;
     },
     flareChartDataReceived: (state, action: PayloadAction<FlareData>) => {
       const flareTemp = action.payload;

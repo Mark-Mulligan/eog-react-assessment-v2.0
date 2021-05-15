@@ -13,10 +13,9 @@ const getMetricsSelected = (state: IState) => {
 };
 
 const getChartData = (state: IState) => {
-  const { oilTemp, currentOilData, waterTemp, flareTemp, injValveOpen, tubingPressure, casingPressure } = state.chartData;
+  const { oilTemp, waterTemp, flareTemp, injValveOpen, tubingPressure, casingPressure } = state.chartData;
   return {
     oilTemp,
-    currentOilData,
     waterTemp,
     flareTemp,
     injValveOpen,
@@ -48,11 +47,9 @@ const MetricCardContainer = () => {
   return (
     <div className="container mt-5 mb-5">
       {metricsSelected.length > 0 && metricsSelected.map(metric => {
-
         return <MetricCard key={metric} title={metric} timeStamp={currentTime} />
       })}
 
-      
       {metricsSelected.length > 0 && <Chart3 data={formattedData} />}
     
     </div>
