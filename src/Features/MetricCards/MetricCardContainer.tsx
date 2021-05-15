@@ -13,9 +13,10 @@ const getMetricsSelected = (state: IState) => {
 };
 
 const getChartData = (state: IState) => {
-  const { oilTemp, waterTemp, flareTemp, injValveOpen, tubingPressure, casingPressure } = state.chartData;
+  const { oilTemp, currentOilData, waterTemp, flareTemp, injValveOpen, tubingPressure, casingPressure } = state.chartData;
   return {
     oilTemp,
+    currentOilData,
     waterTemp,
     flareTemp,
     injValveOpen,
@@ -30,10 +31,7 @@ const MetricCardContainer = () => {
   const { metricsSelected } = useSelector(getMetricsSelected);
   const rawData = useSelector(getChartData);
 
-
  const formattedData: any = [];
-
- //console.log('raw data', rawData);
 
  metricsSelected.forEach(metric => {
    formattedData.push({
@@ -43,7 +41,6 @@ const MetricCardContainer = () => {
  })
 
   useEffect(() => {
-    //console.log(metricsSelected);
     let now = Date.now();
     setCurrentTime(now)
   }, [metricsSelected]);
@@ -51,7 +48,8 @@ const MetricCardContainer = () => {
   return (
     <div className="container mt-5 mb-5">
       {metricsSelected.length > 0 && metricsSelected.map(metric => {
-        return <MetricCard key={metric} title={metric} timeStamp={currentTime} metricReading="250 F" />
+
+        return <MetricCard key={metric} title={metric} timeStamp={currentTime} />
       })}
 
       

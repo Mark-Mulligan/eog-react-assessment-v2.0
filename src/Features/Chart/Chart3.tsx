@@ -23,7 +23,7 @@ const Chart3 = ({ data }: ChartProps) => {
         <Tooltip />
         <Legend />
         {data.map((d : any, index: number) => (
-          <Line dataKey="value" data={d.data} name={d.name} key={d.name} dot={false} stroke={chartColors[index]}/>
+          <Line isAnimationActive={false} dataKey="value" data={d.data} name={d.name} key={d.name} dot={false} stroke={chartColors[index]}/>
         ))}
       </LineChart>
     </div>

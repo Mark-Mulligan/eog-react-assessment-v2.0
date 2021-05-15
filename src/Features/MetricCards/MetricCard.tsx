@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from './reducer';
 import { makeStyles } from '@material-ui/core/styles';
@@ -6,6 +6,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { IState } from '../../store';
 import { useQuery } from 'urql';
 
 const useStyles = makeStyles({
@@ -18,10 +19,16 @@ const useStyles = makeStyles({
   },
 });
 
+const getCurrentData = (state: IState) => {
+  const { currentOilData } = state.chartData;
+  return {
+    currentOilData
+  };
+};
+
 type CardProps = {
   title: string;
   timeStamp: number;
-  metricReading: string;
 };
 
 const query = `
@@ -35,14 +42,16 @@ query($input: MeasurementQuery!) {
 }
 `;
 
-export default function MetricCard({ title, timeStamp, metricReading }: CardProps) {
+export default function MetricCard({ title, timeStamp }: CardProps) {
   const classes = useStyles();
-
   const dispatch = useDispatch();
+
+
 
   //const thirtyMinInterval = 30 * 60 * 1000;
   const oneMinInterval = 1 * 60 * 1000;
   //console.log('timestamp', timeStamp);
+  const updatedData = useSelector(getCurrentData);
 
   const input = {
     metricName: String(title),
@@ -70,6 +79,7 @@ export default function MetricCard({ title, timeStamp, metricReading }: CardProp
     const dataWithReadableTime: any = [];
 
     data.getMeasurements.forEach((rawData: any ) => {
+      console.log(rawData);
       let date = new Date(rawData.at);
 
       dataWithReadableTime.push({
@@ -115,7 +125,7 @@ export default function MetricCard({ title, timeStamp, metricReading }: CardProp
           {title}
         </Typography>
         <Typography variant="body2" component="p">
-          {metricReading}
+          {title === "oilTemp" && `${updatedData.currentOilData.value} ${updatedData.currentOilData.unit}`}
         </Typography>
       </CardContent>
     </Card>

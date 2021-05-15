@@ -44,6 +44,13 @@ const initialState = {
     unit: '',
     value: 0
   }],
+  currentOilData: {
+    dateTime: '',
+    at: 0,
+    metric: '',
+    unit: '',
+    value: 0
+  },
   waterTemp: [],
   flareTemp: [],
   injValveOpen: [],
@@ -63,7 +70,7 @@ const slice = createSlice({
     oilDataUpdate: (state, action: PayloadAction<NewOilData>) => {
       const oilTemp = action.payload;
       state.oilTemp.push(oilTemp);
-      //state.oilTemp.data.push(oilTemp);
+      state.currentOilData = oilTemp;
     },
     waterChartDataReceived: (state, action: PayloadAction<WaterData>) => {
       const waterTemp = action.payload;
