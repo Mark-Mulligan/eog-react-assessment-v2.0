@@ -20,10 +20,11 @@ const useStyles = makeStyles({
 });
 
 const getCurrentData = (state: IState) => {
-  const { currentOilData, currentWaterTemp } = state.chartData;
+  const { currentOilData, currentWaterTemp, currentFlareTemp } = state.chartData;
   return {
     currentOilData,
     currentWaterTemp,
+    currentFlareTemp
   };
 };
 
@@ -48,9 +49,9 @@ export default function MetricCard({ title, timeStamp }: CardProps) {
   const dispatch = useDispatch();
 
   //const thirtyMinInterval = 30 * 60 * 1000;
-  const oneMinInterval = 1 * 60 * 1000;
+  const oneMinInterval = 30 * 60 * 1000;
   //console.log('timestamp', timeStamp);
-  const { currentOilData, currentWaterTemp } = useSelector(getCurrentData);
+  const { currentOilData, currentWaterTemp, currentFlareTemp } = useSelector(getCurrentData);
 
   const input = {
     metricName: String(title),
@@ -78,7 +79,6 @@ export default function MetricCard({ title, timeStamp }: CardProps) {
     const dataWithReadableTime: any = [];
 
     data.getMeasurements.forEach((rawData: any) => {
-      console.log(rawData);
       let date = new Date(rawData.at);
 
       dataWithReadableTime.push({
@@ -128,6 +128,7 @@ export default function MetricCard({ title, timeStamp }: CardProps) {
         <Typography variant="body2" component="p">
           {title === 'oilTemp' && `${currentOilData.value} ${currentOilData.unit}`}
           {title === 'waterTemp' && `${currentWaterTemp.value} ${currentWaterTemp.unit}`}
+          {title === 'flareTemp' &&`${currentFlareTemp.value} ${currentFlareTemp.unit}` }
         </Typography>
       </CardContent>
     </Card>

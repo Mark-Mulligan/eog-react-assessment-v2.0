@@ -1,7 +1,6 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-
 type ChartProps = {
   data: any;
 }
@@ -11,7 +10,7 @@ const chartColors = ["#E74C3C", "#566573", "#3498DB", "#58D68D", "#F4D03F", "#C3
 const Chart3 = ({ data }: ChartProps) => {
   return (
     <div className="chart-wrapper">
-    <LineChart data={data} height={650} width={700} margin={{
+    <LineChart data={data} height={650} width={1000} margin={{
             top: 5,
             right: 20,
             left: 20,

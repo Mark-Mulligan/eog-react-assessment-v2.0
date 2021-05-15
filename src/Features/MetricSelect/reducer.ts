@@ -5,7 +5,7 @@ export type metricsAvailable = {
 };
 
 export type metricsSelected = {
-  metricsSelected: string[];
+  metricsSelected: any;
 }
 
 export type ApiErrorAction = {

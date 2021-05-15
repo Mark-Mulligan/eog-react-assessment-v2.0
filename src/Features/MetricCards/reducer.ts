@@ -65,7 +65,20 @@ const initialState = {
     unit: '',
     value: 0
   },
-  flareTemp: [],
+  flareTemp: [{
+    dateTime: '',
+    at: 0,
+    metric: '',
+    unit: '',
+    value: 0
+  }],
+  currentFlareTemp: {
+    dateTime: '',
+    at: 0,
+    metric: '',
+    unit: '',
+    value: 0
+  },
   injValveOpen: [],
   tubingPressure: [],
   casingPressure: []
@@ -97,6 +110,11 @@ const slice = createSlice({
     flareChartDataReceived: (state, action: PayloadAction<FlareData>) => {
       const flareTemp = action.payload;
       state.flareTemp = flareTemp as any;
+    },
+    flareDataUpdate: (state, action: PayloadAction<NewMetricData>) => {
+      const flareTemp = action.payload;
+      state.flareTemp.push(flareTemp);
+      state.currentFlareTemp = flareTemp;
     },
     injValveChartDataReceived: (state, action: PayloadAction<InjValveData>) => {
       const injValveOpen = action.payload;
