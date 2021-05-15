@@ -20,20 +20,6 @@ const handleSubscription = (messages = [], response: { newMeasurement: any }) =>
   return [response.newMeasurement, ...messages];
 };
 
-const createMetricDataObj = (inputData: any) => {
-  let date = new Date(inputData.at);
-
-  const newMetricDataObj: any = {
-    at: inputData.at,
-    value: inputData.value,
-    unit: inputData.unit,
-    metric: inputData.metric,
-    dateTime: `${date.toLocaleDateString()} ${date.toLocaleTimeString('en-US')}`,
-  };
-
-  return newMetricDataObj;
-};
-
 const getMetricsSelected = (state: IState) => {
   const { metricsSelected } = state.metrics;
   return {
@@ -43,20 +29,6 @@ const getMetricsSelected = (state: IState) => {
 
 const Dashboard = () => {
   const [subscriptionStarted, setSubscriptionStarted] = useState(false);
-  const [currentOilData, setCurrentOilData] = useState({
-    value: 0,
-    unit: '',
-    metric: '',
-    at: 0,
-    dateTime: '',
-  });
-  const [currentWaterData, setCurrentWaterData] = useState({
-    value: 0,
-    unit: '',
-    metric: '',
-    at: 0,
-    dateTime: '',
-  });
   const [currentFlareData, setCurrentFlareData] = useState({
     value: 0,
     unit: '',
@@ -89,18 +61,21 @@ const Dashboard = () => {
 
     //console.log(data);
 
-    let waterTempData: any= {};
     let flareTempData: any = {};
     let injValveData: any = {};
     
     if (data.length === 1 || data.length % 6 === 1) {
       dispatch(actions.oilDataUpdate(data[0]));
-      setCurrentOilData(data[0]);
+      //setCurrentOilData(data[0]);
 
       if (subscriptionStarted === false) {
         setSubscriptionStarted(true);
-        dispatch(dashboardActions.subscriptionStartTime(data[0]));
+        dispatch(dashboardActions.subscriptionStartTime(data[0].at));
       }
+    }
+
+    if (data.length === 4 || data.length % 6 === 4) {
+      dispatch(actions.waterDataUpdate(data[0]));
     }
 
     /* for (let i = 0; i < data.length; i++) {
@@ -110,12 +85,6 @@ const Dashboard = () => {
       }
     } */
 
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].metric === 'waterTemp') {
-        waterTempData = data[i]
-        i = data.length;
-      }
-    }
 
     for (let i = 0; i < data.length; i++) {
       if (data[i].metric === 'flareTemp') {
@@ -152,18 +121,12 @@ const Dashboard = () => {
       setCurrentOilData(oilTempData);
     } */
 
-    if (JSON.stringify(waterTempData) !== '{}' && currentWaterData.at !== waterTempData.at) {
-      dispatch(actions.waterDataUpdate(waterTempData));
-      setCurrentWaterData(waterTempData);
-    }
-
     /* if (wtData.length > 0 && currentWaterData.at !== wtData[0].at) {
       dispatch(actions.waterDataUpdate(wtData[0]));
       setCurrentWaterData(wtData[0]);
     } */
 
     if (JSON.stringify(flareTempData) !== '{}' && currentFlareData.at !== flareTempData.at) {
-      console.log('flare temp update ran')
       dispatch(actions.flareDataUpdate(flareTempData));
       setCurrentFlareData(flareTempData);
     }
@@ -174,7 +137,6 @@ const Dashboard = () => {
     } */
 
     if (JSON.stringify(injValveData) !== '{}' && currentInjValve.at !== injValveData.at) {
-      console.log('inj valve update ran');
       dispatch(actions.injValveDataUpdate(injValveData));
       setCurrentInjValve(injValveData);
     }
@@ -193,7 +155,7 @@ const Dashboard = () => {
   return (
     <div>
       <h2>Oil Temp</h2>
-      <p>{currentOilData.value}</p>
+      <p>No Need</p>
     </div>
   );
 };
