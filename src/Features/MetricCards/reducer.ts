@@ -114,7 +114,18 @@ const initialState = {
     unit: '',
     value: 0,
   },
-  casingPressure: [],
+  casingPressureHistoryRequested: false,
+  casingPressure: [{
+    at: 0,
+    value: 0
+  }],
+  currentCasingPressure: {
+    dateTime: '',
+    at: 0,
+    metric: '',
+    unit: '',
+    value: 0
+  }
 };
 
 const slice = createSlice({
@@ -217,8 +228,22 @@ const slice = createSlice({
     },
 
     casingPressureChartDataReceived: (state, action: PayloadAction<CasingData>) => {
+      if (state.casingPressureHistoryRequested === false) {
+        const pastCasingPressure: any = action.payload;
+        const currentCasingPressure: any = state.casingPressure;
+        state.casingPressure = [...pastCasingPressure, ...currentCasingPressure];
+        state.casingPressureHistoryRequested = true;
+      }
+    },
+    casingPressureDataUpdate: (state, action: PayloadAction<NewMetricData>) => {
       const casingPressure = action.payload;
-      state.casingPressure = casingPressure as any;
+      if (state.casingPressure[0].at === 0) {
+        state.casingPressure[0] = casingPressure;
+        state.currentCasingPressure = casingPressure;
+      }
+
+      state.casingPressure.push(casingPressure);
+      state.currentCasingPressure = casingPressure;
     },
     measurmentApiErrorReceived: (state, action: PayloadAction<ApiErrorAction>) => state,
   },

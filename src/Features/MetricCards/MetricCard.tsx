@@ -20,13 +20,14 @@ const useStyles = makeStyles({
 });
 
 const getCurrentData = (state: IState) => {
-  const { currentOilData, currentWaterTemp, currentFlareTemp, currentInjValve, currentTubingPresssure } = state.chartData;
+  const { currentOilData, currentWaterTemp, currentFlareTemp, currentInjValve, currentTubingPresssure, currentCasingPressure } = state.chartData;
   return {
     currentOilData,
     currentWaterTemp,
     currentFlareTemp,
     currentInjValve,
-    currentTubingPresssure
+    currentTubingPresssure,
+    currentCasingPressure
   };
 };
 
@@ -55,7 +56,7 @@ export default function MetricCard({ title, timeStamp }: CardProps) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { currentOilData, currentWaterTemp, currentFlareTemp, currentInjValve, currentTubingPresssure} = useSelector(getCurrentData);
+  const { currentOilData, currentWaterTemp, currentFlareTemp, currentInjValve, currentTubingPresssure, currentCasingPressure } = useSelector(getCurrentData);
   const { subscriptionStart } = useSelector(getSubscriptionStart);
   const oneMinInterval = 1 * 60 * 1000;
 
@@ -127,6 +128,7 @@ export default function MetricCard({ title, timeStamp }: CardProps) {
           {title === 'flareTemp' &&`${currentFlareTemp.value} F` }
           {title === 'injValveOpen' && `${currentInjValve.value} %`}
           {title === 'tubingPressure' && `${currentTubingPresssure.value} PSI`}
+          {title === 'casingPressure' && `${currentCasingPressure.value} PSI`}
         </Typography>
       </CardContent>
     </Card>
