@@ -60,8 +60,6 @@ export default function MetricCard({ title, timeStamp }: CardProps) {
   const { subscriptionStart } = useSelector(getSubscriptionStart);
   const oneMinInterval = 1 * 60 * 1000;
 
-  console.log(subscriptionStart);
-
   const input = {
     metricName: String(title),
     before: subscriptionStart,
@@ -90,46 +88,32 @@ export default function MetricCard({ title, timeStamp }: CardProps) {
       return;
     }
 
-    const dataWithReadableTime: any = [];
-
     console.log(data);
-
-    data.getMeasurements.forEach((rawData: any) => {
-      let date = new Date(rawData.at);
-
-      dataWithReadableTime.push({
-        dateTime: `${date.toLocaleDateString()} ${date.toLocaleTimeString('en-US')}`,
-        at: rawData.at,
-        metric: rawData.metric,
-        unit: rawData.unit,
-        value: rawData.value,
-      });
-    });
 
 
     // Switch statment did not work, caused data to be overidden as more charts were added.  
     if (data.getMeasurements[0].metric === 'oilTemp') {
-      dispatch(actions.oilChartDataReceived(dataWithReadableTime));
+      dispatch(actions.oilChartDataReceived(data.getMeasurements));
     }
 
     if (data.getMeasurements[0].metric === 'waterTemp') {
-      dispatch(actions.waterChartDataReceived(dataWithReadableTime));
+      dispatch(actions.waterChartDataReceived(data.getMeasurements));
     }
 
     if (data.getMeasurements[0].metric === 'flareTemp') {
-      dispatch(actions.flareChartDataReceived(dataWithReadableTime));
+      dispatch(actions.flareChartDataReceived(data.getMeasurements));
     }
 
     if (data.getMeasurements[0].metric === 'injValveOpen') {
-      dispatch(actions.injValveChartDataReceived(dataWithReadableTime));
+      dispatch(actions.injValveChartDataReceived(data.getMeasurements));
     }
 
     if (data.getMeasurements[0].metric === 'tubingPressure') {
-      dispatch(actions.tubingPressureChartDataReceived(dataWithReadableTime));
+      dispatch(actions.tubingPressureChartDataReceived(data.getMeasurements));
     }
 
     if (data.getMeasurements[0].metric === 'casingPressure') {
-      dispatch(actions.casingPressureChartDataReceived(dataWithReadableTime));
+      dispatch(actions.casingPressureChartDataReceived(data.getMeasurements));
     } 
   }, [data, error]);
 

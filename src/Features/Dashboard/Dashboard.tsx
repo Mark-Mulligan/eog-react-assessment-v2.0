@@ -42,6 +42,7 @@ const getMetricsSelected = (state: IState) => {
 };
 
 const Dashboard = () => {
+  const [subscriptionStarted, setSubscriptionStarted] = useState(false);
   const [currentOilData, setCurrentOilData] = useState({
     value: 0,
     unit: '',
@@ -86,39 +87,93 @@ const Dashboard = () => {
       return;
     }
 
-    const filteredOilT = data.filter((measurement: any) => measurement.metric === 'oilTemp');
-    const otData = filteredOilT.slice(0, 1).map((measurement: any) => measurement);
-    const filteredWaterT = data.filter((measurement: any) => measurement.metric === 'waterTemp');
-    const wtData = filteredWaterT.slice(0, 1).map((measurement: any) => measurement);
-    const filteredFlareT = data.filter((measurement: any) => measurement.metric === 'flareTemp');
-    const ftData = filteredFlareT.slice(0, 1).map((measurement: any) => measurement);
-    const filteredInjV = data.filter((newMeasurement: any) => newMeasurement.metric === 'injValveOpen');
-    const ivData = filteredInjV.slice(0, 1).map((measurement: any) => measurement);
+    //console.log(data);
 
-    if (filteredOilT.length === 1) {
-      dispatch(dashboardActions.subscriptionStartTime(otData[0].at));
+    let oilTempData: any= {};
+    let waterTempData: any= {};
+    let flareTempData: any = {};
+    let injValveData: any = {};
+
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].metric === 'oilTemp') {
+        oilTempData = data[i];
+        i = data.length;
+      }
     }
 
-    if (currentOilData.at !== otData[0].at) {
-      const newOilData = createMetricDataObj(otData[0]);
-      setCurrentOilData(newOilData);
-      dispatch(actions.oilDataUpdate(newOilData));
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].metric === 'waterTemp') {
+        waterTempData = data[i]
+        i = data.length;
+      }
     }
 
-    if (wtData.length > 0 && currentWaterData.at !== wtData[0].at) {
-      const newWaterData = createMetricDataObj(wtData[0]);
-      setCurrentWaterData(newWaterData);
-      dispatch(actions.waterDataUpdate(newWaterData));
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].metric === 'flareTemp') {
+        flareTempData = data[i]
+        i = data.length;
+      }
     }
 
-    if (ftData.length > 0 && currentFlareData.at !== ftData[0].at) {
-      const newFlareData = createMetricDataObj(ftData[0]);
-      setCurrentFlareData(newFlareData);
-      console.log(newFlareData);
-      dispatch(actions.flareDataUpdate(newFlareData)); 
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].metric === 'injValveOpen') {
+        injValveData = data[i];
+        i = data.length;
+      }
     }
 
-    if (ivData.length > 0 && currentInjValve.at !== ivData[0].at) {
+    //const filteredOilT = data.filter((measurement: any) => measurement.metric === 'oilTemp');
+    //const otData = filteredOilT.slice(0, 1).map((measurement: any) => measurement);
+    //const filteredWaterT = data.filter((measurement: any) => measurement.metric === 'waterTemp');
+    //const wtData = filteredWaterT.slice(0, 1).map((measurement: any) => measurement);
+    //const filteredFlareT = data.filter((measurement: any) => measurement.metric === 'flareTemp');
+    //const ftData = filteredFlareT.slice(0, 1).map((measurement: any) => measurement);
+    //const filteredInjV = data.filter((newMeasurement: any) => newMeasurement.metric === 'injValveOpen');
+    //const ivData = filteredInjV.slice(0, 1).map((measurement: any) => measurement);
+
+    if (subscriptionStarted === false) {
+      setSubscriptionStarted(true);
+      dispatch(dashboardActions.subscriptionStartTime(oilTempData.at));
+    }
+
+    /* if (currentOilData.at !== otData[0].at) {
+      dispatch(actions.oilDataUpdate(otData[0]));
+      setCurrentOilData(otData[0]);
+    } */
+
+    if (currentOilData.at !== oilTempData.at) {
+      dispatch(actions.oilDataUpdate(oilTempData));
+      setCurrentOilData(oilTempData);
+    }
+
+    if (JSON.stringify(waterTempData) !== '{}' && currentWaterData.at !== waterTempData.at) {
+      dispatch(actions.waterDataUpdate(waterTempData));
+      setCurrentWaterData(waterTempData);
+    }
+
+    /* if (wtData.length > 0 && currentWaterData.at !== wtData[0].at) {
+      dispatch(actions.waterDataUpdate(wtData[0]));
+      setCurrentWaterData(wtData[0]);
+    } */
+
+    if (JSON.stringify(flareTempData) !== '{}' && currentFlareData.at !== flareTempData.at) {
+      console.log('flare temp update ran')
+      dispatch(actions.flareDataUpdate(flareTempData));
+      setCurrentFlareData(flareTempData);
+    }
+
+    /* if (ftData.length > 0 && currentFlareData.at !== ftData[0].at) {
+      dispatch(actions.flareDataUpdate(ftData[0])); 
+      setCurrentFlareData(ftData[0]);
+    } */
+
+    if (JSON.stringify(injValveData) !== '{}' && currentInjValve.at !== injValveData.at) {
+      console.log('inj valve update ran');
+      dispatch(actions.injValveDataUpdate(injValveData));
+      setCurrentInjValve(injValveData);
+    }
+
+    /* if (ivData.length > 0 && currentInjValve.at !== ivData[0].at) {
       const newInjValveData = createMetricDataObj(ivData[0]);
       setCurrentInjValve(newInjValveData);
 
@@ -126,7 +181,7 @@ const Dashboard = () => {
       if (metricsCopy.includes('injValveOpen')) {
         dispatch(actions.injValveDataUpdate(newInjValveData));
       }
-    }
+    } */
   }, [data, error]);
 
   return (

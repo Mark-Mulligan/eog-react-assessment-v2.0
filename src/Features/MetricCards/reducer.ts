@@ -88,6 +88,7 @@ const initialState = {
     unit: '',
     value: 0,
   },
+  injValveHistoryRequested: false,
   injValveOpen: [
     {
       dateTime: '',
@@ -170,13 +171,23 @@ const slice = createSlice({
       state.currentFlareTemp = flareTemp;
     },
     injValveChartDataReceived: (state, action: PayloadAction<InjValveData>) => {
-      const injValveOpen = action.payload;
-      state.injValveOpen = injValveOpen as any;
+      if (state.injValveHistoryRequested === false) {
+        const pastInjValve: any = action.payload;
+        const currentInjValve: any = state.injValveOpen;
+        state.injValveOpen = [...pastInjValve, ...currentInjValve];
+        state.injValveHistoryRequested = true;
+      }
     },
     injValveDataUpdate: (state, action: PayloadAction<NewMetricData>) => {
-      const injValveOpen = action.payload;
-      state.injValveOpen.push(injValveOpen);
-      state.currentInjValve = injValveOpen;
+      const injValve = action.payload;
+      if (state.injValveOpen[0].at === 0) {
+        state.injValveOpen[0] = injValve;
+        state.currentInjValve = injValve;
+        return;
+      }
+
+      state.injValveOpen.push(injValve);
+      state.currentInjValve = injValve;
     },
     tubingPressureChartDataReceived: (state, action: PayloadAction<TubbingData>) => {
       const tubingPressure = action.payload;

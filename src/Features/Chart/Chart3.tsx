@@ -17,7 +17,7 @@ const Chart3 = ({ data }: ChartProps) => {
             bottom: 20,
           }}>
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="dateTime" type="category" allowDuplicatedCategory={false} />
+        <XAxis dataKey="at" type="category" allowDuplicatedCategory={false} />
         <YAxis dataKey="value" />
         <Tooltip />
         <Legend />
