@@ -42,8 +42,6 @@ const MetricCardContainer = () => {
    })
  })
 
-  console.log(formattedData);
-
   useEffect(() => {
     //console.log(metricsSelected);
     let now = Date.now();

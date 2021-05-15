@@ -70,11 +70,11 @@ export default function MetricCard({ title, timeStamp, metricReading }: CardProp
     const dataWithReadableTime: any = [];
 
     data.getMeasurements.forEach((rawData: any ) => {
-      console.log(rawData);
       let date = new Date(rawData.at);
 
       dataWithReadableTime.push({
-        at: `${date.toLocaleDateString()} ${date.toLocaleTimeString('en-US')}`,
+        dateTime: `${date.toLocaleDateString()} ${date.toLocaleTimeString('en-US')}`,
+        at: rawData.at,
         metric: rawData.metric,
         unit: rawData.unit,
         value: rawData.value,
@@ -83,7 +83,6 @@ export default function MetricCard({ title, timeStamp, metricReading }: CardProp
 
     if (data.getMeasurements[0].metric === 'oilTemp') {
       dispatch(actions.oilChartDataReceived(dataWithReadableTime));
-      //console.log('oil temp data');
     }
 
     if (data.getMeasurements[0].metric === 'waterTemp') {

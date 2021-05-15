@@ -1,8 +1,16 @@
 import { createSlice, PayloadAction } from 'redux-starter-kit';
 
-export type ChartData = {
+export type OilData = {
   oilTemp: any;
 };
+
+export type NewOilData = {
+  dateTime: '',
+    at: 0,
+    metric: '',
+    unit: '',
+    value: 0
+}
 
 export type WaterData = {
   waterTemp: any;
@@ -29,7 +37,13 @@ export type ApiErrorAction = {
 };
 
 const initialState = {
-  oilTemp: [],
+  oilTemp: [{
+    dateTime: '',
+    at: 0,
+    metric: '',
+    unit: '',
+    value: 0
+  }],
   waterTemp: [],
   flareTemp: [],
   injValveOpen: [],
@@ -41,9 +55,15 @@ const slice = createSlice({
   name: 'oilTemp',
   initialState,
   reducers: {
-    oilChartDataReceived: (state, action: PayloadAction<ChartData>) => {
+    oilChartDataReceived: (state, action: PayloadAction<OilData>) => {
+      console.log('redux state', state.oilTemp);
       const oilTemp = action.payload;
       state.oilTemp = oilTemp as any;
+    },
+    oilDataUpdate: (state, action: PayloadAction<NewOilData>) => {
+      const oilTemp = action.payload;
+      state.oilTemp.push(oilTemp);
+      //state.oilTemp.data.push(oilTemp);
     },
     waterChartDataReceived: (state, action: PayloadAction<WaterData>) => {
       const waterTemp = action.payload;
