@@ -23,7 +23,7 @@ const getCurrentData = (state: IState) => {
   const { currentOilData, currentWaterTemp } = state.chartData;
   return {
     currentOilData,
-    currentWaterTemp
+    currentWaterTemp,
   };
 };
 
@@ -77,7 +77,7 @@ export default function MetricCard({ title, timeStamp }: CardProps) {
 
     const dataWithReadableTime: any = [];
 
-    data.getMeasurements.forEach((rawData: any ) => {
+    data.getMeasurements.forEach((rawData: any) => {
       console.log(rawData);
       let date = new Date(rawData.at);
 
@@ -88,8 +88,10 @@ export default function MetricCard({ title, timeStamp }: CardProps) {
         unit: rawData.unit,
         value: rawData.value,
       });
-    }); 
+    });
 
+
+    // Switch statment did not work, caused data to be overidden as more charts were added.  
     if (data.getMeasurements[0].metric === 'oilTemp') {
       dispatch(actions.oilChartDataReceived(dataWithReadableTime));
     }
@@ -112,7 +114,7 @@ export default function MetricCard({ title, timeStamp }: CardProps) {
 
     if (data.getMeasurements[0].metric === 'casingPressure') {
       dispatch(actions.casingPressureChartDataReceived(dataWithReadableTime));
-    }
+    } 
   }, [data, error]);
 
   if (fetching) return <LinearProgress />;
@@ -124,8 +126,8 @@ export default function MetricCard({ title, timeStamp }: CardProps) {
           {title}
         </Typography>
         <Typography variant="body2" component="p">
-          {title === "oilTemp" && `${currentOilData.value} ${currentOilData.unit}`}
-          {title === "waterTemp" && `${currentWaterTemp.value} ${currentWaterTemp.unit}`}
+          {title === 'oilTemp' && `${currentOilData.value} ${currentOilData.unit}`}
+          {title === 'waterTemp' && `${currentWaterTemp.value} ${currentWaterTemp.unit}`}
         </Typography>
       </CardContent>
     </Card>
