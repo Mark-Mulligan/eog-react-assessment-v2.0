@@ -80,7 +80,7 @@ const MetricSelect = () => {
   }
 
   return (
-    <div className="col-md-6 col-12">
+    <div className="col-sm-6 col-12 mb-4 d-flex align-items-center">
       <FormControl variant="outlined" fullWidth>
         <InputLabel id="metric-select-label">Metric Readings</InputLabel>
         <Select

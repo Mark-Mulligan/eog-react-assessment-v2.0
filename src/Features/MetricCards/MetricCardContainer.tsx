@@ -37,7 +37,7 @@ const MetricCardContainer = () => {
   });
 
   return (
-    <div className="container-fluid mt-4 mb-4">
+    <div className="container-fluid mb-4">
       <div className="row">
         {metricsSelected.length > 0 &&
           metricsSelected.map(metric => {

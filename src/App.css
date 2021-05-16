@@ -37,3 +37,7 @@
 .weather-chip .MuiChip-label {
   white-space: normal !important;
 }
+
+.container-fluid {
+  max-width: 1420px;
+}
