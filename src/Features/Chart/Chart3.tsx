@@ -108,8 +108,7 @@ const Chart3 = ({ data }: ChartProps) => {
                 stroke={chartColors[index]}
               />
             );
-          }
-          if (d.name === 'tubingPressure' || d.name === 'casingPressure') {
+          } else if (d.name === 'tubingPressure' || d.name === 'casingPressure') {
             return (
               <Line
                 isAnimationActive={false}
@@ -122,9 +121,7 @@ const Chart3 = ({ data }: ChartProps) => {
                 stroke={chartColors[index]}
               />
             );
-          }
-
-          if (d.name === 'injValveOpen') {
+          } else if (d.name === 'injValveOpen') {
             return (
               <Line
                 isAnimationActive={false}
@@ -137,6 +134,8 @@ const Chart3 = ({ data }: ChartProps) => {
                 stroke={chartColors[index]}
               />
             );
+          } else {
+            return <Line />
           }
         })}
       </LineChart>
