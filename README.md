@@ -6,7 +6,7 @@
 This project was built as part of the [EOG React Visualization Assessment](https://react.eogresources.com). The goal of the project was to create a dashboard that depicts live data in the form of graphs and metric readings. This dashboard would in turn be used by either engineers or managers of an oil refinery so they can make sure all the equipment is working properly. The data is provided by a graphQL api designed by EOG and simulates hypothetical set of equipment in the field (in this case, metric reading for an oil refinery). After the data is received, it is stored and manipulated on the front end using Redux.  
 
 ### View the Project Live <br>
-https://employee-management-system-1.herokuapp.com/
+https://react-data-visualization.netlify.app
 
 #### Built With
 * graphQL
