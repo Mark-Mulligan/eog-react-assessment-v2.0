@@ -36,7 +36,6 @@ const getSubscriptionStart = (state: IState) => {
 
 type CardProps = {
   title: string;
-  timeStamp: number;
 };
 
 const query = `
@@ -49,13 +48,13 @@ query($input: MeasurementQuery!) {
 }
 `;
 
-export default function MetricCard({ title, timeStamp }: CardProps) {
+export default function MetricCard({ title }: CardProps) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const { currentOilData, currentWaterTemp, currentFlareTemp, currentInjValve, currentTubingPresssure, currentCasingPressure } = useSelector(getCurrentData);
   const { subscriptionStart } = useSelector(getSubscriptionStart);
-  const oneMinInterval = 1 * 60 * 1000;
+  const oneMinInterval = 30 * 60 * 1000;
 
   const input = {
     metricName: String(title),

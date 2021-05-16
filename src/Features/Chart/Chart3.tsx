@@ -19,6 +19,14 @@ const convertToDate = (milliseconds: number) => {
   return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
 };
 
+const convertToTime = (milliseconds: number) => {
+  let date = new Date(milliseconds);
+  let time = date.toLocaleTimeString().split(':');
+  let hours = time[0];
+  let minutes = time[1];
+  return `${hours}:${minutes}`;
+}
+
 const CustomTooltip = ({ active, payload }: any) => {
   if (active) {
     return (
@@ -45,6 +53,18 @@ const CustomTooltip = ({ active, payload }: any) => {
   return null;
 };
 
+const CustomizedTick = (props: any) => {
+  const { x, y, stroke, payload } = props;
+
+    return (
+      <g transform={`translate(${x},${y})`}>
+        <text x={0} y={0} dy={16} textAnchor="middle" fill="#666" transform="">
+          {convertToTime(payload.value)}
+        </text>
+      </g>
+    );
+}
+
 const chartColors = ['#E74C3C', '#566573', '#3498DB', '#58D68D', '#F4D03F', '#C39BD3'];
 
 const Chart3 = ({ data }: ChartProps) => {
@@ -65,7 +85,7 @@ const Chart3 = ({ data }: ChartProps) => {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="at" type="category" allowDuplicatedCategory={false} />
+        <XAxis dataKey="at" type="number" domain={['dataMin', 'dataMax']}  allowDuplicatedCategory={false} tick={<CustomizedTick />} />
 
         {metrics.includes('injValveOpen') ? <YAxis yAxisId="percent" label="%" dataKey="value" /> : null}
         {metrics.includes('tubingPressure') || metrics.includes('casingPressure') ? (

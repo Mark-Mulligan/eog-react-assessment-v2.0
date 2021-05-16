@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
   wrapper: {
-    height: '200vh',
+    minHeight: '100vh',
   },
 });
 

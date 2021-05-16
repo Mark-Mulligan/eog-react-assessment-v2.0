@@ -25,8 +25,6 @@ const getChartData = (state: IState) => {
 };
 
 const MetricCardContainer = () => {
-  const [currentTime, setCurrentTime] = useState(0);
-
   const { metricsSelected } = useSelector(getMetricsSelected);
   const rawData = useSelector(getChartData);
 
@@ -39,17 +37,12 @@ const MetricCardContainer = () => {
     });
   });
 
-  useEffect(() => {
-    let now = Date.now();
-    setCurrentTime(now);
-  }, [metricsSelected]);
-
   return (
     <div className="container-fluid mt-5 mb-5">
       <div className="row">
         {metricsSelected.length > 0 &&
           metricsSelected.map(metric => {
-            return <MetricCard key={metric} title={metric} timeStamp={currentTime} />;
+            return <MetricCard key={metric} title={metric} />;
           })}
       </div>
 
