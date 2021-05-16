@@ -6,16 +6,21 @@ export type metricsAvailable = {
 
 export type metricsSelected = {
   metricsSelected: string[];
-}
+};
 
 export type ApiErrorAction = {
   error: string;
 };
 
+export type InitialState = {
+  metricsAvaiable: string[];
+  metricsSelected: string[];
+};
+
 const initialState = {
   metricsAvailable: [],
   metricsSelected: []
-};
+}; 
 
 const slice = createSlice({
   name: 'metrics',

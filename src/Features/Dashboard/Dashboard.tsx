@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import { actions } from '../MetricCards/reducer';
 import { actions as dashboardActions } from './reducer';
 import { useSubscription } from 'urql';
+import MetricSelect from "../MetricSelect/MetricSelect";
+import MetricCardContainer from "../MetricCards/MetricCardContainer";
 
 const newMeasurement = `
 subscription {
@@ -75,8 +77,8 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h2>Oil Temp</h2>
-      <p>No Need</p>
+      <MetricSelect />
+      <MetricCardContainer />
     </div>
   );
 };

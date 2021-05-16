@@ -33,8 +33,6 @@ const App = () => (
     <Provider store={store}>
       <Wrapper>
         <Header />
-        <MetricSelect />
-        <MetricCardContainer />
         <Dashboard />
         <ToastContainer />
       </Wrapper>

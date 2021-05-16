@@ -78,9 +78,9 @@ const MetricSelect = () => {
   }
 
   return (
-    <div className="container mt-5">
+    <div className="container-fluid mt-5">
       <FormControl variant="outlined" fullWidth>
-        <InputLabel id="metric-select-label">Metric</InputLabel>
+        <InputLabel id="metric-select-label">Metric Readings</InputLabel>
         <Select
           required
           labelId="metric-select-label"

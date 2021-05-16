@@ -20,9 +20,6 @@ const Chart3 = ({ data }: ChartProps) => {
   const { metricsSelected } = useSelector(getSelectedMetrics);
   const metrics: any = metricsSelected;
 
-  console.log(metrics);
-  console.log(metrics.includes('oilTemp'));
-
   return (
     <div className="chart-wrapper">
       <LineChart
@@ -31,8 +28,8 @@ const Chart3 = ({ data }: ChartProps) => {
         width={1000}
         margin={{
           top: 5,
-          right: 20,
-          left: 20,
+          right: 10,
+          left: 10,
           bottom: 20,
         }}
       >

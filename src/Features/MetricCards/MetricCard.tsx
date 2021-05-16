@@ -10,13 +10,9 @@ import { IState } from '../../store';
 import { useQuery } from 'urql';
 
 const useStyles = makeStyles({
-  root: {
-    minWidth: 275,
-    display: 'inline-block',
-  },
-  pos: {
-    marginBottom: 12,
-  },
+  cardTitle: {
+    fontSize: '1.3rem'
+  }
 });
 
 const getCurrentData = (state: IState) => {
@@ -117,9 +113,10 @@ export default function MetricCard({ title, timeStamp }: CardProps) {
   if (fetching) return <LinearProgress />;
 
   return (
-    <Card className={classes.root}>
+    <div className="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+      <Card>
       <CardContent>
-        <Typography variant="h5" component="h2">
+        <Typography variant="h5" component="h2" className={classes.cardTitle}>
           {title}
         </Typography>
         <Typography variant="body2" component="p">
@@ -132,5 +129,7 @@ export default function MetricCard({ title, timeStamp }: CardProps) {
         </Typography>
       </CardContent>
     </Card>
+    </div>
+    
   );
 }
