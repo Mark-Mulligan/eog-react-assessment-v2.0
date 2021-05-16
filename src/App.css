@@ -1,15 +1,35 @@
 .chart-wrapper {
   min-height: 50vh;
   width: 100%;
-  border: 1px solid black;
   overflow: scroll;
+  border: 1px solid gray;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 1050px) {
+  .chart-wrapper {
+    display: block
+  }
 }
 
 .recharts-legend-wrapper {
   bottom: 0 !important;
 }
 
-.custom-tooltip {
-  
-  
+.custom-tooltip h6{
+  margin: 2px;
+}
+
+.custom-tooltip p {
+  margin: 2px;
+  padding: 3px;
+}
+
+.tooltip-readings {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  text-align: center;
 }
