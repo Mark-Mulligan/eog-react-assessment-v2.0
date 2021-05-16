@@ -12,7 +12,6 @@ subscription {
     unit
     at
     value
-    metric
   }
 }
 `;
@@ -68,11 +67,6 @@ const Dashboard = () => {
     if (data.length === 6 || data.length % 6 === 0) {
       dispatch(actions.flareDataUpdate(data[0]));
     }
-
-    
-
-   
-
   }, [data, error]);
 
   return (

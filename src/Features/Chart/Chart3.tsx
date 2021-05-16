@@ -21,10 +21,6 @@ const convertToDate = (milliseconds: number) => {
 
 
 const CustomTooltip = ({ active, payload }: any) => {
-    //console.log(active);
-    //console.log(payload)
-
-
     if (active) {
       return payload.map((item: any) => {
         {console.log(item)}
