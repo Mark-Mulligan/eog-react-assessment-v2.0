@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { IState } from '../../store';
 import MetricCard from './MetricCard';
-//import Chart from "../Chart/Chart";
 import Chart3 from '../Chart/Chart3';
 
 const getMetricsSelected = (state: IState) => {

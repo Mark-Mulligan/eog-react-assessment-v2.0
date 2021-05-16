@@ -8,8 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import Header from './components/Header';
 import Wrapper from './components/Wrapper';
 import Dashboard from './Features/Dashboard/Dashboard';
-import MetricSelect from './Features/MetricSelect/MetricSelect';
-import MetricCardContainer from './Features/MetricCards/MetricCardContainer';
 import './App.css';
 
 const store = createStore();

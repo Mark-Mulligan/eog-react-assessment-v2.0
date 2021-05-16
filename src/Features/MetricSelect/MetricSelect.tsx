@@ -7,6 +7,8 @@ import { IState } from '../../store';
 import { FormControl, InputLabel, Select, Input, Chip, MenuItem } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
+//https://stackoverflow.com/questions/64670624/deletable-chips-in-material-ui-multiple-select
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {

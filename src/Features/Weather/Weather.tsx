@@ -6,6 +6,15 @@ import { useGeolocation } from 'react-use';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Chip from '../../components/Chip';
 import { IState } from '../../store';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(() => ({
+  chip: {
+    whiteSpace: 'normal'
+  },
+}));
+
+
 
 const query = `
 query($latLong: WeatherQuery!) {
@@ -27,6 +36,7 @@ const getWeather = (state: IState) => {
 };
 
 const Weather = () => {
+  const classes = useStyles();
   const getLocation = useGeolocation();
   // Default to houston
   const latLong = {
@@ -57,7 +67,7 @@ const Weather = () => {
 
   if (fetching) return <LinearProgress />;
 
-  return <Chip label={`Weather in ${locationName}: ${description} and ${temperatureinFahrenheit}°`} />;
+  return <Chip className="weather-chip" label={`Weather in ${locationName}: ${description} and ${temperatureinFahrenheit}°`} />;
 };
 
 export default Weather;

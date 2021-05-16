@@ -33,3 +33,7 @@
   border-radius: 10px;
   text-align: center;
 }
+
+.weather-chip .MuiChip-label {
+  white-space: normal !important;
+}

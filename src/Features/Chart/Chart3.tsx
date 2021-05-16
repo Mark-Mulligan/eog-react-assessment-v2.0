@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { useSelector } from 'react-redux';
 import { IState } from '../../store';
 
 type ChartProps = {
@@ -34,9 +34,6 @@ const CustomTooltip = ({ active, payload }: any) => {
         <h6>{convertToDate(payload[0].payload.at)}</h6>
         <div className="tooltip-readings">
           {payload.map((item: any) => {
-            {
-              console.log(item);
-            }
             return (
               <div key={item.name}>
                 <p>
@@ -54,7 +51,7 @@ const CustomTooltip = ({ active, payload }: any) => {
 };
 
 const CustomizedTick = (props: any) => {
-  const { x, y, stroke, payload } = props;
+  const { x, y, payload } = props;
 
     return (
       <g transform={`translate(${x},${y})`}>
@@ -84,20 +81,20 @@ const Chart3 = ({ data }: ChartProps) => {
           bottom: 20,
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="at" type="number" domain={['dataMin', 'dataMax']}  allowDuplicatedCategory={false} tick={<CustomizedTick />} />
+        <CartesianGrid strokeDasharray="5 5"/>
+        <XAxis dataKey="at" type="number" tickCount={7} domain={['dataMin', 'dataMax']}  allowDuplicatedCategory={false} tick={<CustomizedTick />} />
 
-        {metrics.includes('injValveOpen') ? <YAxis yAxisId="percent" label="%" dataKey="value" /> : null}
+        {metrics.includes('injValveOpen') ? <YAxis yAxisId="percent" label={{ value: '%', position: 'insideLeft' }} dataKey="value" /> : null}
         {metrics.includes('tubingPressure') || metrics.includes('casingPressure') ? (
-          <YAxis yAxisId="psi" label="PSI" dataKey="value" />
+          <YAxis yAxisId="psi" label={{ value: 'PSI', position: 'insideLeft' }} dataKey="value" />
         ) : null}
         {metrics.includes('oilTemp') || metrics.includes('waterTemp') || metrics.includes('flareTemp') ? (
-          <YAxis yAxisId="F" label="F" dataKey="value" />
+          <YAxis yAxisId="°F" label={{ value: 'F', position: 'insideLeft' }} dataKey="value" />
         ) : null}
 
         <Tooltip content={<CustomTooltip />} />
         <Legend />
-        {data.map((d: any, index: number) => {
+        {data.map(function (d: any, index: number) {
           if (d.name === 'oilTemp' || d.name === 'waterTemp' || d.name === 'flareTemp') {
             return (
               <Line

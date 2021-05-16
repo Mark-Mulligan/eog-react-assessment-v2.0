@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from './reducer';
 import { makeStyles } from '@material-ui/core/styles';
@@ -108,7 +108,7 @@ export default function MetricCard({ title }: CardProps) {
     if (title === 'casingPressure') {
       dispatch(actions.casingPressureChartDataReceived(data.getMeasurements));
     } 
-  }, [data, error]);
+  }, [data, error, title, dispatch]);
 
   if (fetching) return <LinearProgress />;
 
