@@ -72,7 +72,7 @@ const Chart3 = ({ data }: ChartProps) => {
     <div className="chart-wrapper">
       <LineChart
         data={data}
-        height={650}
+        height={600}
         width={1000}
         margin={{
           top: 5,
@@ -89,7 +89,7 @@ const Chart3 = ({ data }: ChartProps) => {
           <YAxis yAxisId="psi" label={{ value: 'PSI', position: 'insideLeft' }} dataKey="value" />
         ) : null}
         {metrics.includes('oilTemp') || metrics.includes('waterTemp') || metrics.includes('flareTemp') ? (
-          <YAxis yAxisId="°F" label={{ value: 'F', position: 'insideLeft' }} dataKey="value" />
+          <YAxis yAxisId="F" label={{ value: '°F"', position: 'insideLeft' }} dataKey="value" />
         ) : null}
 
         <Tooltip content={<CustomTooltip />} />

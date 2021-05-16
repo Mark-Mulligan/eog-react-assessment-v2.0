@@ -3,8 +3,9 @@ import { useDispatch } from 'react-redux';
 import { actions } from '../MetricCards/reducer';
 import { actions as dashboardActions } from './reducer';
 import { useSubscription } from 'urql';
-import MetricSelect from "../MetricSelect/MetricSelect";
-import MetricCardContainer from "../MetricCards/MetricCardContainer";
+import MetricSelect from '../MetricSelect/MetricSelect';
+import MetricCardContainer from '../MetricCards/MetricCardContainer';
+import Instructions from '../../components/Instructions';
 
 const newMeasurement = `
 subscription {
@@ -37,7 +38,6 @@ const Dashboard = () => {
       return;
     }
 
-    
     if (data.length === 1 || data.length % 6 === 1) {
       dispatch(actions.oilDataUpdate(data[0]));
 
@@ -71,7 +71,13 @@ const Dashboard = () => {
 
   return (
     <div>
-      <MetricSelect />
+      <div className="container-fluid mt-4">
+        <div className="row">
+          <Instructions />
+          <MetricSelect />
+        </div>
+      </div>
+
       <MetricCardContainer />
     </div>
   );
