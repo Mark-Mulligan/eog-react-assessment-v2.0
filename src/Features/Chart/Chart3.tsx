@@ -14,6 +14,35 @@ const getSelectedMetrics = (state: IState) => {
   };
 };
 
+const convertToDate = (milliseconds: number) => {
+  const date = new Date(milliseconds);
+  return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
+}
+
+
+const CustomTooltip = ({ active, payload }: any) => {
+    //console.log(active);
+    //console.log(payload)
+
+
+    if (active) {
+      return payload.map((item: any) => {
+        {console.log(item)}
+        return (
+        <div key={item.name} className="custom-tooltip border">
+        <h2>{item.name}</h2>
+        <p>{convertToDate(item.payload.at)}</p>
+        <p>{item.payload.value} {item.payload.unit}</p>
+        </div>
+        )
+      })
+      
+    }
+    
+    return null;
+}
+
+
 const chartColors = ['#E74C3C', '#566573', '#3498DB', '#58D68D', '#F4D03F', '#C39BD3'];
 
 const Chart3 = ({ data }: ChartProps) => {
@@ -40,7 +69,7 @@ const Chart3 = ({ data }: ChartProps) => {
         {metrics.includes('tubingPressure') || metrics.includes('casingPressure') ? <YAxis yAxisId="psi" label="PSI" dataKey="value" /> : null}
         {metrics.includes('oilTemp') || metrics.includes('waterTemp') || metrics.includes('flareTemp') ? <YAxis yAxisId="F" label="F" dataKey="value" /> : null}
 
-        <Tooltip />
+        <Tooltip content={<CustomTooltip/>}/>
         <Legend />
         {data.map((d: any, index: number) => {
           if (d.name === 'oilTemp' || d.name === 'waterTemp' || d.name === 'flareTemp') {

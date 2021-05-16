@@ -44,6 +44,7 @@ query($input: MeasurementQuery!) {
   getMeasurements(input: $input) {
     at
     value
+    unit
   }
 }
 `;
