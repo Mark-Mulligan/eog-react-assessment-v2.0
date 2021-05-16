@@ -21,13 +21,13 @@ https://employee-management-system-1.herokuapp.com/
 
 * Mulitselect that allows the user to decide which metric data they want to track.   
 
-<img src="./readmeImages/MetricSelect.jpg" alt="Dashboard Page" width="600px" height="200px">
+<img src="./readmeImages/MetricSelect.jpg" alt="Dashboard Page" width="600px" height="150px">
 
 #### Metric Cards
 
 * Has the current reading of different metric data.  Will be displayed if the metric data is selected in the multiselect above.   
 
-<img src="./readmeImages/MetricCards.jpg" alt="Add Student Modal" width="600px" height="200px">
+<img src="./readmeImages/MetricCards.jpg" alt="Add Student Modal" width="600px" height="150px">
 
 #### Live Graphs
  
