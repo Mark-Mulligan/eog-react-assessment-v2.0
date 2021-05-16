@@ -60,7 +60,7 @@ yarn install
 yarn start
 ```
 
-## Questions
+## Contact
 [My Github](https://github.com/Mark-Mulligan) || mark.mulligan.jr1@gmail.com
 
 #### How to Contact Me
