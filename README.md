@@ -3,7 +3,7 @@
 <img src="./readmeImages/AppOverview.jpg" alt="Picture of Project Dashboard" width="500px" height="250px">
 
 ## Description 
-This project was built as part of the [EOG React Visualization Assessment](https://react.eogresources.com). The goal of the project was to create a dashboard that depicts live data in the form of graphs and metric readings. This dashboard would in turn be used by either engineers or managers of an oil refinery so they can make sure all the equipment is working properly. The data is provided by a graphQL api designed by EOG and simulates hypothetical set of equipment in the field (in this case, metric reading for a oil refinery). After the data is received, it is stored and manipulated on the front end using Redux.  
+This project was built as part of the [EOG React Visualization Assessment](https://react.eogresources.com). The goal of the project was to create a dashboard that depicts live data in the form of graphs and metric readings. This dashboard would in turn be used by either engineers or managers of an oil refinery so they can make sure all the equipment is working properly. The data is provided by a graphQL api designed by EOG and simulates hypothetical set of equipment in the field (in this case, metric reading for an oil refinery). After the data is received, it is stored and manipulated on the front end using Redux.  
 
 ### View the Project Live <br>
 https://employee-management-system-1.herokuapp.com/
@@ -21,13 +21,13 @@ https://employee-management-system-1.herokuapp.com/
 
 * Mulitselect that allows the user to decide which metric data they want to track.   
 
-<img src="./readmeImages/MetricSelect.jpg" alt="Dashboard Page" width="500px" height="250px">
+<img src="./readmeImages/MetricSelect.jpg" alt="Dashboard Page" width="600px" height="200px">
 
 #### Metric Cards
 
 * Has the current reading of different metric data.  Will be displayed if the metric data is selected in the multiselect above.   
 
-<img src="./readmeImages/MetricCards.jpg" alt="Add Student Modal" width="500px" height="250px">
+<img src="./readmeImages/MetricCards.jpg" alt="Add Student Modal" width="600px" height="200px">
 
 #### Live Graphs
  
