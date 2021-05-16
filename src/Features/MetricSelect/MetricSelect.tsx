@@ -6,6 +6,7 @@ import { actions } from './reducer';
 import { IState } from '../../store';
 import { FormControl, InputLabel, Select, Input, Chip, MenuItem } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { convertCamelCase } from '../../util';
 
 //https://stackoverflow.com/questions/64670624/deletable-chips-in-material-ui-multiple-select
 
@@ -94,7 +95,7 @@ const MetricSelect = () => {
           renderValue={metricsSelected => (
             <div className={classes.chips}>
               {(metricsSelected as string[]).map(value => (
-                <Chip key={value} label={value} className={classes.chip} />
+                <Chip key={value} label={convertCamelCase(value)} className={classes.chip} />
               ))}
             </div>
           )}
@@ -102,7 +103,7 @@ const MetricSelect = () => {
         >
           {metricsAvailable.map(metric => (
             <MenuItem key={metric} value={metric}>
-              {metric}
+              {convertCamelCase(metric)}
             </MenuItem>
           ))}
         </Select>

@@ -9,7 +9,7 @@ const Instructions = () => {
       <Card>
       <CardContent>
         <Typography variant="body2" component="p">
-          Use the multiselect on the right to select the current mertic data you would like to view.  
+          Use the multiselect to select the current mertic data you would like to view.  
           You can stop viewing the data by clicking on the item in the menu list when the list is open. 
           The charat displays the last 30 minutes of data and is updated with the current data receieved since the application loaded. 
           This application is fully responsive and the chart is scrollable on small screens.  

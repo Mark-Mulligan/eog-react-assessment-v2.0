@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { IState } from '../../store';
 import { useQuery } from 'urql';
+import { convertCamelCase } from "../../util";
 
 const useStyles = makeStyles({
   cardTitle: {
@@ -117,7 +118,7 @@ export default function MetricCard({ title }: CardProps) {
       <Card>
       <CardContent>
         <Typography variant="h5" component="h2" className={classes.cardTitle}>
-          {title}
+          {convertCamelCase(title)}
         </Typography>
         <Typography variant="body2" component="p">
           {title === 'oilTemp' && `${currentOilData.value} F`}

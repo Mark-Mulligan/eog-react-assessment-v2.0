@@ -2,6 +2,7 @@ import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { useSelector } from 'react-redux';
 import { IState } from '../../store';
+import { convertCamelCase } from '../../util';
 
 type ChartProps = {
   data: any;
@@ -37,7 +38,7 @@ const CustomTooltip = ({ active, payload }: any) => {
             return (
               <div key={item.name}>
                 <p>
-                  {item.name}: {item.payload.value} {item.payload.unit}
+                  {convertCamelCase(item.name)}: {item.payload.value} {item.payload.unit}
                 </p>
               </div>
             );
