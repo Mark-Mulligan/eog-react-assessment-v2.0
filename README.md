@@ -27,7 +27,7 @@ https://employee-management-system-1.herokuapp.com/
 
 * Has the current reading of different metric data.  Will be displayed if the metric data is selected in the multiselect above.   
 
-<img src="./readmeImages/MetricCards.jpg" alt="Add Student Modal" width="600px" height="150px">
+<img src="./readmeImages/MetricCards.jpg" alt="Add Student Modal" width="600px" height="100px">
 
 #### Live Graphs
  
