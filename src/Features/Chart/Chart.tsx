@@ -64,7 +64,7 @@ const CustomizedTick = (props: any) => {
 
 const chartColors = ['#E74C3C', '#566573', '#3498DB', '#58D68D', '#F4D03F', '#C39BD3'];
 
-const Chart3 = ({ data }: ChartProps) => {
+const Chart = ({ data }: ChartProps) => {
   const { metricsSelected } = useSelector(getSelectedMetrics);
   const metrics: any = metricsSelected;
 
@@ -86,7 +86,7 @@ const Chart3 = ({ data }: ChartProps) => {
 
         {metrics.includes('injValveOpen') ? <YAxis yAxisId="percent" label={{ value: '%', position: 'insideLeft' }} dataKey="value" /> : null}
         {metrics.includes('tubingPressure') || metrics.includes('casingPressure') ? (
-          <YAxis yAxisId="psi" label={{ value: 'PSI', position: 'insideLeft' }} dataKey="value" />
+          <YAxis yAxisId="psi" label={{ value: 'PSI', id: 'psi-label', position: 'insideLeft' }} dataKey="value" />
         ) : null}
         {metrics.includes('oilTemp') || metrics.includes('waterTemp') || metrics.includes('flareTemp') ? (
           <YAxis yAxisId="F" label={{ value: '°F', position: 'insideLeft' }} dataKey="value" />
@@ -143,4 +143,4 @@ const Chart3 = ({ data }: ChartProps) => {
   );
 };
 
-export default Chart3;
+export default Chart;

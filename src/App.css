@@ -41,3 +41,8 @@
 .container-fluid {
   max-width: 1420px;
 }
+
+#psi-label {
+  transform: translate(10px, -20px);
+  
+}
