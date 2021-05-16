@@ -46,20 +46,17 @@ const Dashboard = () => {
       }
     }
 
-
     if (data.length === 2 || data.length % 6 === 2) {
       dispatch(actions.tubingPressureDataUpdate(data[0]));
     }
 
     if (data.length === 3 || data.length % 6 === 3) {
-      console.log(data[0]);
       dispatch(actions.casingPressureDataUpdate(data[0]));
     }
 
     if (data.length === 4 || data.length % 6 === 4) {
       dispatch(actions.waterDataUpdate(data[0]));
     }
-
 
     if (data.length === 5 || data.length % 6 === 5) {
       dispatch(actions.injValveDataUpdate(data[0]));

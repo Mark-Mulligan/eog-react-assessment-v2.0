@@ -7,7 +7,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from './components/Header';
 import Wrapper from './components/Wrapper';
-import DataChart from './Features/Dashboard/Dashboard';
+import Dashboard from './Features/Dashboard/Dashboard';
 import MetricSelect from './Features/MetricSelect/MetricSelect';
 import MetricCardContainer from './Features/MetricCards/MetricCardContainer';
 import './App.css';
@@ -35,7 +35,7 @@ const App = () => (
         <Header />
         <MetricSelect />
         <MetricCardContainer />
-        <DataChart />
+        <Dashboard />
         <ToastContainer />
       </Wrapper>
     </Provider>
