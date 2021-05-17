@@ -39,6 +39,7 @@ type CardProps = {
   title: string;
 };
 
+// Query to get the histroical metric data (previous 30 minutes)
 const query = `
 query($input: MeasurementQuery!) {
   getMeasurements(input: $input) {
@@ -84,7 +85,7 @@ export default function MetricCard({ title }: CardProps) {
       return;
     }
 
-
+    // This section determines where the historical data is stored in redux after a request is made by the user.   
     // Switch statment did not work, caused data to be overidden as more charts were added.  
     if (title === 'oilTemp') {
       dispatch(actions.oilChartDataReceived(data.getMeasurements));

@@ -15,11 +15,13 @@ const getSelectedMetrics = (state: IState) => {
   };
 };
 
+// Converts millisecond time to date, and full time string
 const convertToDate = (milliseconds: number) => {
   const date = new Date(milliseconds);
   return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
 };
 
+// Converts millisecond time to hours and minutes
 const convertToTime = (milliseconds: number) => {
   let date = new Date(milliseconds);
   let time = date.toLocaleTimeString().split(':');
@@ -96,6 +98,7 @@ const Chart = ({ data }: ChartProps) => {
         <Tooltip content={<CustomTooltip />} />
         <Legend />
         {data.map(function (d: any, index: number) {
+          //This series of if statements determines what the line to draw and what Y axis it should reference based on the name of the data
           if (d.name === 'oilTemp' || d.name === 'waterTemp' || d.name === 'flareTemp') {
             return (
               <Line

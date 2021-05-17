@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-
+// GraphQL query used to populate the multi select
 const query = `
 {
   getMetrics
@@ -53,6 +53,7 @@ const MetricSelect = () => {
   const dispatch = useDispatch();
   const { metricsAvailable, metricsSelected } = useSelector(getMetricsAvailable);
 
+  //Function for handeling changes in the multiselect
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     const optionsSelected = event.target.value as string[];
     dispatch(actions.metricsSelected(optionsSelected as any))
@@ -65,6 +66,7 @@ const MetricSelect = () => {
   const { fetching, data, error } = result;
 
   useEffect(() => {
+    // If an error occurs during the api call, send this to redux 
     if (error) {
       dispatch(actions.metricsApiErrorReceived({ error: error.message }));
       return;
@@ -72,6 +74,7 @@ const MetricSelect = () => {
 
     if (!data) return;
 
+    // If there is a response, send this data to the redux store
     const { getMetrics } = data;
     dispatch(actions.metricsAvailable(getMetrics));
   }, [data, error, dispatch, metricsSelected]);

@@ -29,6 +29,7 @@ const MetricCardContainer = () => {
 
   const formattedData: any = [];
 
+  // Function to format the data from redux to pass to the chart
   metricsSelected.forEach(metric => {
     formattedData.push({
       name: metric,
