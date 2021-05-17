@@ -67,7 +67,7 @@ const Dashboard = () => {
       dispatch(actions.injValveDataUpdate(data[0]));
     }
 
-    if (data.length === 6 || data.length % 6 === 0) {
+    if (data.length >= 6 && data.length % 6 === 0) {
       dispatch(actions.flareDataUpdate(data[0]));
     }
   }, [data, error, dispatch, subscriptionStarted]);
