@@ -1,7 +1,7 @@
 .chart-wrapper {
   min-height: 50vh;
   width: 100%;
-  overflow: scroll;
+  overflow: auto;
   border: 1px solid gray;
   border-radius: 10px;
   display: flex;
@@ -11,7 +11,7 @@
 
 @media (max-width: 1050px) {
   .chart-wrapper {
-    display: block
+    display: block;
   }
 }
 
@@ -19,7 +19,7 @@
   bottom: 0 !important;
 }
 
-.custom-tooltip h6{
+.custom-tooltip h6 {
   margin: 2px;
 }
 
