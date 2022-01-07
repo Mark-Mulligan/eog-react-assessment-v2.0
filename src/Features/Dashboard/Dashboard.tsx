@@ -3,9 +3,11 @@ import { useDispatch } from 'react-redux';
 import { actions } from '../MetricCards/reducer';
 import { actions as dashboardActions } from './reducer';
 import { useSubscription } from 'urql';
-import MetricSelect from "../MetricSelect/MetricSelect";
-import MetricCardContainer from "../MetricCards/MetricCardContainer";
+import MetricSelect from '../MetricSelect/MetricSelect';
+import MetricCardContainer from '../MetricCards/MetricCardContainer';
+import Instructions from '../../components/Instructions';
 
+// GraphQL subscription for live updates - starts as soon as the dashboard components mounts
 const newMeasurement = `
 subscription {
   newMeasurement {
@@ -16,6 +18,7 @@ subscription {
 }
 `;
 
+// function to handle new subscription data
 const handleSubscription = (messages = [], response: { newMeasurement: any }) => {
   return [response.newMeasurement, ...messages];
 };
@@ -37,7 +40,6 @@ const Dashboard = () => {
       return;
     }
 
-    
     if (data.length === 1 || data.length % 6 === 1) {
       dispatch(actions.oilDataUpdate(data[0]));
 
@@ -47,6 +49,8 @@ const Dashboard = () => {
       }
     }
 
+    // Handles incoming data from the subscription.  Since the data is always presented in the same order, 
+    // these if statements word to determine what kind of data is being sent without having to go through the entire array.  
     if (data.length === 2 || data.length % 6 === 2) {
       dispatch(actions.tubingPressureDataUpdate(data[0]));
     }
@@ -63,15 +67,20 @@ const Dashboard = () => {
       dispatch(actions.injValveDataUpdate(data[0]));
     }
 
-    // Need to check to make sure 0 % 6 does not equal 0;
-    if (data.length === 6 || data.length % 6 === 0) {
+    if (data.length >= 6 && data.length % 6 === 0) {
       dispatch(actions.flareDataUpdate(data[0]));
     }
   }, [data, error, dispatch, subscriptionStarted]);
 
   return (
     <div>
-      <MetricSelect />
+      <div className="container-fluid mt-4">
+        <div className="row">
+          <Instructions />
+          <MetricSelect />
+        </div>
+      </div>
+
       <MetricCardContainer />
     </div>
   );

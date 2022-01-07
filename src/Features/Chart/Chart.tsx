@@ -2,6 +2,7 @@ import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { useSelector } from 'react-redux';
 import { IState } from '../../store';
+import { convertCamelCase } from '../../util';
 
 type ChartProps = {
   data: any;
@@ -14,11 +15,13 @@ const getSelectedMetrics = (state: IState) => {
   };
 };
 
+// Converts millisecond time to date, and full time string
 const convertToDate = (milliseconds: number) => {
   const date = new Date(milliseconds);
   return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
 };
 
+// Converts millisecond time to hours and minutes
 const convertToTime = (milliseconds: number) => {
   let date = new Date(milliseconds);
   let time = date.toLocaleTimeString().split(':');
@@ -37,7 +40,7 @@ const CustomTooltip = ({ active, payload }: any) => {
             return (
               <div key={item.name}>
                 <p>
-                  {item.name}: {item.payload.value} {item.payload.unit}
+                  {convertCamelCase(item.name)}: {item.payload.value} {item.payload.unit}
                 </p>
               </div>
             );
@@ -64,7 +67,7 @@ const CustomizedTick = (props: any) => {
 
 const chartColors = ['#E74C3C', '#566573', '#3498DB', '#58D68D', '#F4D03F', '#C39BD3'];
 
-const Chart3 = ({ data }: ChartProps) => {
+const Chart = ({ data }: ChartProps) => {
   const { metricsSelected } = useSelector(getSelectedMetrics);
   const metrics: any = metricsSelected;
 
@@ -72,7 +75,7 @@ const Chart3 = ({ data }: ChartProps) => {
     <div className="chart-wrapper">
       <LineChart
         data={data}
-        height={650}
+        height={600}
         width={1000}
         margin={{
           top: 5,
@@ -86,15 +89,16 @@ const Chart3 = ({ data }: ChartProps) => {
 
         {metrics.includes('injValveOpen') ? <YAxis yAxisId="percent" label={{ value: '%', position: 'insideLeft' }} dataKey="value" /> : null}
         {metrics.includes('tubingPressure') || metrics.includes('casingPressure') ? (
-          <YAxis yAxisId="psi" label={{ value: 'PSI', position: 'insideLeft' }} dataKey="value" />
+          <YAxis yAxisId="psi" label={{ value: 'PSI', id: 'psi-label', position: 'insideLeft' }} dataKey="value" />
         ) : null}
         {metrics.includes('oilTemp') || metrics.includes('waterTemp') || metrics.includes('flareTemp') ? (
-          <YAxis yAxisId="°F" label={{ value: 'F', position: 'insideLeft' }} dataKey="value" />
+          <YAxis yAxisId="F" label={{ value: '°F', position: 'insideLeft' }} dataKey="value" />
         ) : null}
 
         <Tooltip content={<CustomTooltip />} />
         <Legend />
         {data.map(function (d: any, index: number) {
+          //This series of if statements determines what the line to draw and what Y axis it should reference based on the name of the data
           if (d.name === 'oilTemp' || d.name === 'waterTemp' || d.name === 'flareTemp') {
             return (
               <Line
@@ -108,8 +112,7 @@ const Chart3 = ({ data }: ChartProps) => {
                 stroke={chartColors[index]}
               />
             );
-          }
-          if (d.name === 'tubingPressure' || d.name === 'casingPressure') {
+          } else if (d.name === 'tubingPressure' || d.name === 'casingPressure') {
             return (
               <Line
                 isAnimationActive={false}
@@ -122,9 +125,7 @@ const Chart3 = ({ data }: ChartProps) => {
                 stroke={chartColors[index]}
               />
             );
-          }
-
-          if (d.name === 'injValveOpen') {
+          } else if (d.name === 'injValveOpen') {
             return (
               <Line
                 isAnimationActive={false}
@@ -137,6 +138,8 @@ const Chart3 = ({ data }: ChartProps) => {
                 stroke={chartColors[index]}
               />
             );
+          } else {
+            return <Line />
           }
         })}
       </LineChart>
@@ -144,4 +147,4 @@ const Chart3 = ({ data }: ChartProps) => {
   );
 };
 
-export default Chart3;
+export default Chart;

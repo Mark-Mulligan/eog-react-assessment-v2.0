@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { IState } from '../../store';
 import MetricCard from './MetricCard';
-import Chart3 from '../Chart/Chart3';
+import Chart from '../Chart/Chart';
 
 const getMetricsSelected = (state: IState) => {
   const { metricsSelected } = state.metrics;
@@ -29,6 +29,7 @@ const MetricCardContainer = () => {
 
   const formattedData: any = [];
 
+  // Function to format the data from redux to pass to the chart
   metricsSelected.forEach(metric => {
     formattedData.push({
       name: metric,
@@ -37,7 +38,7 @@ const MetricCardContainer = () => {
   });
 
   return (
-    <div className="container-fluid mt-5 mb-5">
+    <div className="container-fluid mb-4">
       <div className="row">
         {metricsSelected.length > 0 &&
           metricsSelected.map(metric => {
@@ -45,7 +46,7 @@ const MetricCardContainer = () => {
           })}
       </div>
 
-      {metricsSelected.length > 0 && <Chart3 data={formattedData} />}
+      {metricsSelected.length > 0 && <Chart data={formattedData} />}
     </div>
   );
 };
